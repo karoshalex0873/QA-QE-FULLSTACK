@@ -8,5 +8,5 @@ Kickstart of a 90-day program to enhance skills.
 First assignment: Creating a **QR Code Web Page** using HTML & CSS.
 
 ### Assignment Preview:
-![QR Code Assignment](path/to/your/image.png)
+![QR Code Assignment](/Qr code.png)
 
