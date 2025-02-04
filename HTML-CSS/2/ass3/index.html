@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Card</title>
+    <style>
+      body {
+        background: linear-gradient(to bottom left, #dceafd, #abc7f4, #dceafd);
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        
+        background: linear-gradient(to top left, #dceafd, #d2dae6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        width: 320px;
+        height: 450px;
+      }
+      .google-logo {
+        width: 80px;
+        margin-bottom: 15px;
+      }
+      h2 {
+        margin: 10px 0;
+        font-size: 24px;
+        color: #222;
+      }
+      p {
+        color: #555;
+        margin: 5px 0 20px;
+        font-size: 14px;
+      }
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 20px;
+      }
+      .social-icons >img{
+        width: 24px;
+        height: 24px;
+      }
+      .social-icons i:hover {
+        color: #0073e6;
+      }
+      button {
+        background: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 5px 10px rgba(19, 103, 205, 0.616);
+      }
+      button:hover {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img src="./googel.png" alt="Google Logo" class="google-logo" />
+      <h2>Ranesh Suthar</h2>
+      <p>Designer &middot; Engineer</p>
+      <div class="social-icons">
+        <img src="./facebook.png" alt="" /><img
+          src="./twiiter.png"
+          alt=""
+        /><img src="./image.png" alt="" />
+      </div>
+      <button>Add me to search</button>
+    </div>
+  </body>
+</html>

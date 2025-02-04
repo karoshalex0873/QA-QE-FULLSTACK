@@ -2,7 +2,6 @@
 body {
   margin: 0 100px;
   font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
   background-color: aliceblue;
 }
 
@@ -26,7 +25,6 @@ body {
   align-items: center;
   width: 50%;
 }
-
 
 .menu .logo {
   margin-left: 20px;
@@ -96,7 +94,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 400px; /* Set a max-width for consistency */
 }
 
 .shipping ul {
@@ -212,7 +210,7 @@ form {
 }
 
 .order a {
-  color:#333;
+  color: #333;
   text-decoration: none;
   font-size: 14px;
 }
@@ -231,9 +229,9 @@ hr {
 .summary {
   border-radius: 8px;
   width: 100%;
+  max-width: 400px; /* Match the width of .shipping */
   display: flex;
-  height: 100%;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   background-color: white;
   padding: 20px;
@@ -241,6 +239,7 @@ hr {
 
 .product {
   max-width: 300px;
+  width: 100%;
 }
 
 .product img {
@@ -279,6 +278,7 @@ hr {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  width: 100%;
 }
 
 #head {
