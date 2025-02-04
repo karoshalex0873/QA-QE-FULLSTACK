@@ -13,6 +13,11 @@ First assignment: Creating a **QR Code Web Page** using HTML & CSS.
 ### DAY 2 - HTML & CSS
 3 assigments: 
 i. creating a **Product page** using HTML and CSS
-ii. cretaing a **Drop down Challange** using HTML and CSS            
-iii.Cretaing a **Profile card** using Html and CSS            
+![Products page](https://github.com/karoshalex0873/QA-QE-FULLSTACK/blob/465071feacbea9a464cd4d0f568cce74d1d30fad/products.png)
 
+
+ii. cretaing a **Drop down Challange** using HTML and CSS
+![Drop doown](https://github.com/karoshalex0873/QA-QE-FULLSTACK/blob/465071feacbea9a464cd4d0f568cce74d1d30fad/drop.png)
+
+iii.Cretaing a **Profile card** using Html and CSS            
+![Profile card](https://github.com/karoshalex0873/QA-QE-FULLSTACK/blob/465071feacbea9a464cd4d0f568cce74d1d30fad/profile.png)
