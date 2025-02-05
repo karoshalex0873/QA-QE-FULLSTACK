@@ -18,6 +18,7 @@ let _score= 89;
 //here is an exmple of goodNaming for this example
 // let MyvariableName = "Javascript"
 // best practise
+
 let myVariableName = 'JavaScript'
 
 // determining  the  data type of a variable
@@ -78,3 +79,4 @@ console.log(typeof text)
 console.log(5 + true)
 // the value holded by true value is 1 hence the it is added to it if you use flase the results are 5
 console.log(5 + false)
+
