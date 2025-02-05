@@ -3,44 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Produts_page</title>
+    <title>Products Page</title>
     <link rel="stylesheet" href="assig.css" />
   </head>
   <body>
-    <div class="continer">
-      <div class="nav">
-        <div class="menu">
-          <div class="logo">logo</div>
-          <div class="list_menu">
-            <ul>
-              <li>Home</li>
-              <li>Shop</li>
-              <li>Contact</li>
-              <li>Help</li>
-            </ul>
+    <div class="container">
+      <!-- Navigation Bar -->
+      <nav class="navbar">
+        <div class="navbar__logo">
+          <a href="#">Logo</a>
+        </div>
+        <ul class="navbar__menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+        <div class="navbar__actions">
+          <ul class="navbar__account">
+            <li><a href="#">Account</a></li>
+            <li><a href="#">Items</a></li>
+          </ul>
+          <div class="navbar__profile">
+            <img src="./images/profile.png" alt="Profile" />
           </div>
         </div>
-        <div class="accounts">
-          <ul>
-            <li>Account</li>
-            <li>items</li>
-            <li>
-              <img id="profile" src="./images/profile.png" alt="profile" />
-            </li>
-          </ul>
+        <div class="navbar__toggle">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-      </div>
+      </nav>
+      <!-- Products Page -->
       <div class="products_page">
+        <!-- Shipping Section -->
         <div class="shipping">
           <ul>
-            <li style="color: blue;">Account</li>
-            <img src="./images/image.png" alt="" class="symbols">
-            <img src="./images/right.png" alt="" class="symbols">
-            <img src="./images/image.png" alt="" class="symbols">
+            <li style="color: blue">Account</li>
+            <img src="./images/image.png" alt="" class="symbols" />
+            <img src="./images/right.png" alt="" class="symbols" />
+            <img src="./images/image.png" alt="" class="symbols" />
             <li>Shipping</li>
-            <img src="./images/image.png" alt="" class="symbols">
-            <img src="./images/right.png" alt="" class="symbols">
-            <img src="./images/image.png" alt="" class="symbols">
+            <img src="./images/image.png" alt="" class="symbols" />
+            <img src="./images/right.png" alt="" class="symbols" />
+            <img src="./images/image.png" alt="" class="symbols" />
             <li>Payments</li>
           </ul>
           <h3>Account Details</h3>
@@ -52,7 +58,7 @@
                   type="email"
                   name="email"
                   placeholder="Email@myemail.com"
-                  required="required"
+                  required
                 />
               </div>
               <div class="passwordFields">
@@ -61,58 +67,57 @@
                   type="password"
                   name="password"
                   placeholder="******"
-                  required="required"
+                  required
                 />
               </div>
             </form>
           </div>
           <div class="auth">
-            <a href="">Register for Account</a>
+            <a href="#">Register for Account</a>
             <button class="btn">Login</button>
           </div>
           <hr />
           <div class="order">
-            <a href="">Cancel Order</a>
+            <a href="#">Cancel Order</a>
             <button class="btn">Shipping Details</button>
           </div>
         </div>
-        <!-- summary of the products -->
+
+        <!-- Order Summary Section -->
         <div class="summary">
           <div class="product">
             <h3>Order Summary</h3>
-            <img src="./images/product.png" alt="product">
+            <img src="./images/product.png" alt="product" />
             <div class="product_info">
-                <p>Sony wireless headphones<br><strong style="padding-left: 20px;">€ 320</strong></p>
+              <p>Sony Wireless Headphones<br /><strong>€ 320</strong></p>
               <div class="cart">
-                <button>+</button>
-                <h2>1</h2>
                 <button>-</button>
+                <h2>1</h2>
+                <button>+</button>
               </div>
             </div>
-            <!-- gift card -->
-             <div class="gift_card">
-              <p id="head">Gift card /Dicosunt Code</p>
+            <!-- Gift Card Section -->
+            <div class="gift_card">
+              <p id="head">Gift Card / Discount Code</p>
               <div class="card_input">
-                <input type="text" name="card" id="">
+                <input type="text" name="card" placeholder="Enter code" />
                 <button class="apply">Apply</button>
               </div>
               <div class="tras">
                 <div class="row1">
-                  <P>Sub Total</P>
-                  <P>Tax</P>
-                  <P>Shipping</P>
-                  <P>Total</P>
-                  <hr>
+                  <p>Sub Total</p>
+                  <p>Tax</p>
+                  <p>Shipping</p>
+                  <p>Total</p>
                 </div>
                 <div class="row2">
-                  <P>316.55</P>
-                  <P>3.25</P>
-                  <P style=" color: blue;">Free</P>
-                  <P>320.45</P>
-                  <hr>
+                  <p>€ 316.55</p>
+                  <p>€ 3.25</p>
+                  <p style="color: blue">Free</p>
+                  <p>€ 320.45</p>
                 </div>
               </div>
-             </div>
+            </div>
           </div>
         </div>
       </div>

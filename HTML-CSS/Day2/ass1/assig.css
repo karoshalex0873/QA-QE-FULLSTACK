@@ -5,77 +5,130 @@ body {
   background-color: aliceblue;
 }
 
-.continer {
+.container {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.nav {
-  padding: 10px;
+/* Navigation Bar */
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+  color: white;
+  border-bottom: 2px solid rgba(0, 128, 0, 0.276);
 }
-
-.menu {
-  display: flex;
-  margin-left: 30px;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-}
-
-.menu .logo {
-  margin-left: 20px;
-  margin-right: 20px;
+.navbar__logo a {
+  font-size: 28px;
   font-weight: bold;
-  font-size: 20px;
+  color: black;
+  text-decoration: none;
 }
 
-.list_menu ul {
+.navbar__menu {
   display: flex;
   list-style: none;
-  justify-content: center;
-  align-items: center;
-  padding-right: 20px;
+  gap: 20px;
 }
-
-.list_menu ul li {
-  margin-left: 20px;
-  padding-right: 15px;
-  cursor: pointer;
+.navbar__menu li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0 20px;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
-
-.list_menu ul li:hover {
-  color: #007bff;
+.navbar__menu li a:hover {
+  color: black;
+  font-weight: bold;
 }
-
-.accounts ul {
+.navbar__actions {
   display: flex;
-  width: 100%;
-  list-style: none;
-  justify-content: space-between;
   align-items: center;
+  gap: 30px;
+  margin: 0 10px;
 }
 
-.accounts ul li {
-  margin-left: 20px;
-  cursor: pointer;
+.navbar__account {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin-left: 30px;
+}
+.navbar__account li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
 }
 
-.accounts ul li:hover {
-  color: #007bff;
+.navbar__account li a:hover {
+  color: black;
+  font-weight: bolder;
 }
 
-#profile {
+.navbar__profile img {
   width: 40px;
   height: 40px;
-  object-fit: cover;
-  padding: 8px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
 }
 
+.navbar__toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar__menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+  }
+
+  .navbar__menu.active {
+    display: flex;
+  }
+
+  .navbar__actions {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+  }
+
+  .navbar__actions.active {
+    display: flex;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+}
+
+/* Products Page */
 .products_page {
   margin: 20px 10%;
   display: flex;
@@ -94,7 +147,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   width: 100%;
-  max-width: 400px; /* Set a max-width for consistency */
+  max-width: 400px;
 }
 
 .shipping ul {
@@ -157,10 +210,11 @@ form {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 0 30px;
+  padding: 0 10px;
   font-size: 14px;
-  width: 70%;
+  width: 100%;
   background-color: rgb(98, 138, 181);
+  color: white;
 }
 
 .emailField input:focus,
@@ -229,7 +283,7 @@ hr {
 .summary {
   border-radius: 8px;
   width: 100%;
-  max-width: 400px; /* Match the width of .shipping */
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -282,7 +336,7 @@ hr {
 }
 
 #head {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: medium;
   padding-left: 40px;
 }
@@ -328,4 +382,24 @@ hr {
 .tras p {
   font-size: 14px;
   margin: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    margin: 0 20px;
+  }
+
+  .products_page {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .shipping,
+  .summary{
+    max-width: 100%;
+  }
+  .shipping ul{
+    display: block;
+  }
 }
