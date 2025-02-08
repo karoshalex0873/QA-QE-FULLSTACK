@@ -51,6 +51,7 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  align-items: center;
   margin: 0 14px;
 }
 
@@ -75,7 +76,9 @@ body {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
-
+.dropdown-content a img {
+  margin: 0 5px ;
+}
 .dropdown-content a {
   color: #333;
   padding: 12px 16px;
