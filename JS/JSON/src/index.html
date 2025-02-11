@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    #listproducts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .product h2 {
+      font-size: 1.75rem;
+      color: #1f2937;
+      margin-bottom: 15px;
+    }
+
+    .product p {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 10px;
+    }
+
+    .product .price {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #e67e22;
+      margin-bottom: 15px;
+    }
+
+    .product .stock {
+      font-size: 1rem;
+      color: #2ecc71;
+      font-weight: 500;
+    }
+
+    .product .category {
+      font-size: 1rem;
+      color: #3498db;
+      font-weight: 500;
+    }
+
+    /* Make the page more mobile-friendly */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      .product h2 {
+        font-size: 1.5rem;
+      }
+
+      .product .price {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Product List</h1>
+    <div id="listproducts">Loading...</div>
+  </div>
+
+  <script src="./index.js"></script> <!-- Make sure index.js is in the same folder -->
+</body>
+</html>
