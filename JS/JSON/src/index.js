@@ -10,11 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
         productList.innerHTML = data
           .map(product => 
             `<div class="product">
-               <h2>${product.name}</h2>
+             <img src="${product.image}" alt="${product.name}">
+               <h2 class="heading">${product.name}</h2>
+               <hr/>
                <p><strong>Category:</strong> ${product.category}</p>
-               <p><strong>Price:</strong> Ksh${product.price.toFixed(2)}</p>
+               <p><strong>Price:</strong><span class="price"> Ksh${product.price.toFixed(2)}</span></p>
                <p><strong>Description:</strong> ${product.description}</p>
-               <p><strong>Stock Available:</strong> ${product.stock}</p>
+               <p><strong class="stock">Stock Available:</strong> ${product.stock}</p>
              </div>`
           )
           .join(""); // Join the array to form a valid HTML string

@@ -6,7 +6,10 @@
       "description": "A high-precision wireless mouse with adjustable DPI settings.",
       "price": 29.99,
       "category": "Electronics",
-      "stock": 150
+      "stock": 150,
+      "image": "../public/images/mouse.png"
+
+
     },
     {
       "id": "002",
@@ -14,7 +17,9 @@
       "description": "Over-ear Bluetooth headphones with noise cancellation.",
       "price": 89.99,
       "category": "Electronics",
-      "stock": 75
+      "stock": 75,
+      "image": "../public/images/headphones.png"
+      
     },
     {
       "id": "003",
@@ -22,7 +27,10 @@
       "description": "An ergonomic office chair with adjustable height and lumbar support.",
       "price": 199.99,
       "category": "Furniture",
-      "stock": 20
+      "stock": 20,
+      "image": "../public/images/chair.png"
+
+      
     },
     {
       "id": "004",
@@ -30,7 +38,9 @@
       "description": "A non-slip yoga mat with extra cushioning for comfort.",
       "price": 24.99,
       "category": "Fitness",
-      "stock": 100
+      "stock": 100,
+      "image": "../public/images/mat.png"
+
     },
     {
       "id": "005",
@@ -38,7 +48,9 @@
       "description": "A durable stainless steel water bottle with a leak-proof cap.",
       "price": 15.99,
       "category": "Home & Kitchen",
-      "stock": 200
+      "stock": 200,
+      "image": "../public/images/Bottle.png"
     }
+
   ]
 }
