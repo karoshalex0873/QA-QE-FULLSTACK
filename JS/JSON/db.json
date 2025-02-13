@@ -8,8 +8,6 @@
       "category": "Electronics",
       "stock": 150,
       "image": "../public/images/mouse.png"
-
-
     },
     {
       "id": "002",
@@ -19,7 +17,6 @@
       "category": "Electronics",
       "stock": 75,
       "image": "../public/images/headphones.png"
-      
     },
     {
       "id": "003",
@@ -29,8 +26,6 @@
       "category": "Furniture",
       "stock": 20,
       "image": "../public/images/chair.png"
-
-      
     },
     {
       "id": "004",
@@ -40,7 +35,6 @@
       "category": "Fitness",
       "stock": 100,
       "image": "../public/images/mat.png"
-
     },
     {
       "id": "005",
@@ -49,8 +43,7 @@
       "price": 15.99,
       "category": "Home & Kitchen",
       "stock": 200,
-      "image": "../public/images/Bottle.png"
+      "image": "../public/images/bottle.png"
     }
-
   ]
 }
