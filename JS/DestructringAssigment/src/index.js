@@ -55,9 +55,7 @@ const {
 
 // let append = document.getElementById('personal-info')
 // append.innerHTML=`${id},${first} `
-document.getElementById(
-  "personal-info"
-).innerHTML = ` <ul> <li> <strong>User_Id:</strong> ${id} </li> <li> <strong>Names:</strong> ${first} ${last} </li>  <li> <strong>Email:</strong> ${email} </li>  </ul>`;
+document.querySelector('#personal-info').innerHTML = ` <ul> <li> <strong>User_Id:</strong> ${id} </li> <li> <strong>Names:</strong> ${first} ${last} </li>  <li> <strong>Email:</strong> ${email} </li>  </ul>`;
 document.getElementById(
   "shipping-address"
 ).innerHTML = `<h2>Shipping Address:</h2> <ul> <li><strong>Street:</strong> ${street}</li>  <li><strong>City:</strong> ${city} </li>  <li><strong> State:</strong> ${state}</li>  <li><strong>Postalcode:</strong> ${postalCode} </li> </ul>`;
