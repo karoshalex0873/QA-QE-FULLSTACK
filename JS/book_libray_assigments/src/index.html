@@ -8,44 +8,72 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-book-open"></i>
+        <span>BookVault</span>
+      </div>
+      
+      <div class="nav-links">
+        <a href="#"><i class="fas fa-home"></i> Home</a>
+        <a href="#"><i class="fas fa-star"></i> Favorites</a>
+        <a href="#"><i class="fas fa-history"></i> History</a>
+      </div>
+
+      <!-- Cart -->
+      <div class="cart">
+        <button class="cart-btn" id="cart_btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="total_count">0</span>
+        </button>
+      </div>
+    </nav>
+
     <div class="container">
-      <h1>Book Library</h1>
+      <h1>Explore Our Library</h1>
+      
+      <!-- Search Section -->
       <div class="search">
-        <input
-          type="text"
-          name="name"
-          placeholder="Search..."
-          id="search_name"
-        />
+        <div class="search-input">
+          <i class="fas fa-search"></i>
+          <input type="text" name="name" placeholder="Search..." id="search_name" />
+        </div>
+      
         <div class="dropdown">
           <button onclick="dropdownFunction()" class="dropbtn">
-            Filter book by
+            <i class="fas fa-filter"></i> Filter By <i class="fas fa-chevron-down"></i>
           </button>
           <div id="myDropdown" class="dropdown-content">
             <label for="filter_name">
-              <input type="checkbox" name="name" id="filter_name" /> By Name
+              <input type="checkbox" name="name" id="filter_name" /> Title
             </label>
             <label for="filter_year">
-              <input type="checkbox" name="year" id="filter_year" /> By Year
+              <input type="checkbox" name="year" id="filter_year" /> Year
             </label>
             <label for="filter_genre">
-              <input type="checkbox" name="genre" id="filter_genre" /> By Genre
+              <input type="checkbox" name="genre" id="filter_genre" /> Genre
             </label>
           </div>
         </div>
       </div>
+      
+
+      <!-- Books Grid -->
       <div id="books">
         <div class="loader-container">
           <span class="loader"></span>
-          <p>Loading data <strong>. . .</strong></p>
-        </div>
-        <div id="no-results" style="display: none">
-          <p>No matching books found.</p>
-        </div>
+          <p>Loading books <strong>. . .</strong></p>
+        </div>   
       </div>
+
       <!-- Modal -->
       <div id="modal" class="modal">
         <div class="modal-content">
@@ -55,6 +83,7 @@
         </div>
       </div>
     </div>
+
     <script src="./index.js"></script>
   </body>
 </html>
