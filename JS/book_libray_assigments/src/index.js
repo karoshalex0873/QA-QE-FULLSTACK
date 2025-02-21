@@ -1,3 +1,4 @@
+let cart = [];
 function dropdownFunction() {
   let dropdown = document.getElementById("myDropdown");
   let button = document.querySelector(".dropbtn");
@@ -28,7 +29,7 @@ const displayBooks = (books) => {
         <p><strong>Genre:</strong> ${book.genre} <strong>Publisher:</strong> ${book.publisher} <strong>Year:</strong> ${book.year}</p>
         <div class="buy_book">
           <button class="buy_book_button" data-id="${book.id}">Buy Now</button>
-          <p>Price: $${book.price}</p>
+          <p><strong>Price:</strong> <span>ksh</span> ${book.price}</p>
         </div>
       </div>`
     )
@@ -141,6 +142,71 @@ const getLargeBooks = (books, callback) => {
   }, 3000);
 };
 
+// Function to generate cart HTML
+const generateCartHTML = (cart) => {
+  let cartHTML = `
+    <h2>Your Cart</h2>
+    <p><strong>Total Books:</strong> ${cart.reduce(
+      (total, book) => total + book.quantity,
+      0
+    )}</p>
+    <div class="modal-body">
+  `;
+
+  cartHTML += cart
+    .map(
+      (book) => `
+        <div class="cart-item_continer">
+          <div class="cart-item">
+        
+            <p class="cart-title"><strong>${book.title}</strong></p>
+          
+            <div class="list-cart-item">
+              <img src="${book.image}" alt="${book.title}" class="cart-image" />
+              <div class="cart-info">
+                <p><strong>Price: Ksh</strong> ${book.price}</p>
+                <p><strong>Quantity:</strong> ${book.quantity}</p>
+                <p><strong>Subtotal:</strong> Ksh ${
+                  book.price * book.quantity
+                }</p>
+              <div class="add-remove">
+                  <button class="remove_book" data-id="${book.id}">-</button>
+                  <span>${book.quantity}</span>
+              <button class="add_book" data-id="${book.id}">+</button> 
+              </div>
+              </div>
+              <div class="delete_div">
+              <p>delete</p> 
+              <button class="delete" data-id="${
+                book.id
+              }"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>`
+    )
+    .join("");
+
+  cartHTML += `
+    </div>
+    <p><strong>Total Price:</strong> ksh ${cart.reduce(
+      (sum, book) => sum + book.price * book.quantity,
+      0
+    )}</p>`;
+
+  return cartHTML;
+};
+
+// Function to update cart modal
+const updateCartModal = () => {
+  const modalText = document.getElementById("modal-text");
+  modalText.innerHTML = generateCartHTML(cart);
+  if (cart.length === 0) {
+    showModal(`Your cart is empty!`);
+    return;
+  }
+};
+
 // Main function to fetch and display books
 const fetchBooks = async () => {
   try {
@@ -216,7 +282,6 @@ const fetchBooks = async () => {
       }
     });
 
-    let cart = [];
     // Add click event listeners to "Buy Now" buttons
     document.addEventListener("click", (event) => {
       if (event.target.classList.contains("buy_book_button")) {
@@ -227,14 +292,12 @@ const fetchBooks = async () => {
           // Check if book is already in cart
           let existingBook = cart.find((item) => item.id == book.id);
           if (existingBook) {
-            existingBook.quantity++; // Increase quantity if already in cart
+            existingBook.quantity++;
           } else {
-            cart.push({ ...book, quantity: 1 }); // Add new book with quantity
+            cart.push({ ...book, quantity: 1 });
           }
           updateCartCount();
-          showModal(
-            `${book.title} ($${book.price}) has been added to your cart!`
-          );
+          updateCartModal(); // Update the modal content
         }
       }
     });
@@ -245,53 +308,60 @@ const fetchBooks = async () => {
         return;
       }
 
-      let cartHTML = `<div class="cart_items">
-        <h2>Your Cart</h2>
-        <p>Total Books: ${cart.reduce(
-          (total, book) => total + book.quantity,
-          0
-        )}</p>
-        <ul>`;
-
-      // Prevent duplicate display but show quantity
-      cartHTML += cart
-        .map(
-          (book) => `
-          <div}">
-          <p><strong>${book.title}</strong></p>
-          <hr /> 
-           <li class="cart_item">
-            <img src="${book.image}" alt="${book.title}" class="cart_image"/>
-            <div class="cart_info">
-              <p>Price: $${book.price}</p>
-              <p>Quantity: ${book.quantity}</p>
-            </div>
-          </li>
-        </div>
-        `
-        )
-        .join("");
-
-      cartHTML += `</ul>
-        <hr />
-        <p><strong>Total Price:</strong> $${cart.reduce(
-          (sum, book) => sum + book.price * book.quantity,
-          0
-        )}</p>
-        <button class="close_cart" onclick="closeModal()">Close</button>
-      </div>`;
-
-      showModal(cartHTML);
+      showModal(generateCartHTML(cart));
     });
 
-    // 🔥 Function to update cart count in the icon
-    function updateCartCount() {
+    // Function to handle cart updates (add, remove, delete)
+    // Modify your existing delete/add/remove event listeners like this:
+    document.addEventListener("click", (event) => {
+      // Remove book quantity
+      if (event.target.classList.contains("remove_book")) {
+        const bookId = event.target.dataset.id;
+        const book = cart.find((item) => item.id == bookId);
+        if (book) {
+          book.quantity--;
+          if (book.quantity < 1) {
+            cart = cart.filter((item) => item.id != bookId);
+          }
+          updateCartCount();
+          updateCartModal(); // Update immediately without timeout
+        }
+      }
+
+      // Add book quantity
+      if (event.target.classList.contains("add_book")) {
+        const bookId = event.target.dataset.id;
+        const book = cart.find((item) => item.id == bookId);
+        if (book) {
+          book.quantity++;
+          updateCartCount();
+          updateCartModal(); // Update immediately without timeout
+        }
+      }
+
+      // Delete book entirely
+      if (event.target.classList.contains("delete")) {
+        const bookId = event.target.dataset.id;
+        cart = cart.filter((item) => item.id != bookId);
+        updateCartCount();
+        updateCartModal(); // Update immediately without timeout
+      }
+    });
+
+    document.getElementById("modal").addEventListener("click", (event) => {
+      if (event.target === document.getElementById("modal")) {
+        closeModal();
+      }
+    });
+
+    // Function to update cart count in the icon
+    const updateCartCount = () => {
       const totalQuantity = cart.reduce(
         (total, book) => total + book.quantity,
         0
       );
       document.getElementById("total_count").innerText = totalQuantity;
-    }
+    };
 
     // Flag and log large books
     flagLargeBooks(books, (flaggedBooks) => {
