@@ -17,6 +17,15 @@ window.onclick = function (event) {
 
 // Function to display books
 const displayBooks = (books) => {
+
+  setTimeout(() => {
+    if (books.length === 0) {
+      document.getElementById("books").innerHTML = `<p>No books found!</p>`;
+      return;
+    } 
+  }, 1000); // Display loading message after 1 second
+  
+
   const booksHTML = books
     .sort((a, b) => a.pages - b.pages) // Sort by pages
     .map(
@@ -38,7 +47,6 @@ const displayBooks = (books) => {
   document.getElementById("books").innerHTML = booksHTML;
 };
 
-// Function to filter books based on search and filters
 const filterBooks = (
   books,
   searchValue,
@@ -53,7 +61,7 @@ const filterBooks = (
       let matches = false;
       if (
         filterName.checked &&
-        book.title.toLowerCase().includes(searchValue)
+        book.title.toLowerCase().includes(searchValue.toLowerCase())
       ) {
         matches = true;
       }
@@ -62,7 +70,7 @@ const filterBooks = (
       }
       if (
         filterGenre.checked &&
-        book.genre.toLowerCase().includes(searchValue)
+        book.genre.toLowerCase().includes(searchValue.toLowerCase())
       ) {
         matches = true;
       }
@@ -72,6 +80,11 @@ const filterBooks = (
 
   if (filterYear.checked) {
     filteredBooks = filteredBooks.sort((a, b) => a.year - b.year);
+  }
+
+  // Check if no books matched the criteria
+  if (filteredBooks.length === 0) {
+   document.getElementById("books").innerHTML = `<p>No books found!</p>`;
   }
 
   return filteredBooks;
