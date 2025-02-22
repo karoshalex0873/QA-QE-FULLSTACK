@@ -1,0 +1,8 @@
+pnpm install --save-dev typescript vitest nodemon prettier tsd vite-tsconfig-paths @total-typescript/exercise-cli @total-typescript/helpers cross-fetch npm-run-all
+
+npx tsc --init 
+
+"scripts": {
+  "dev": "nodemon --exec npx ts-node src/index.ts"
+}
+
