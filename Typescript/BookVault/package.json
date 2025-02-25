@@ -1,0 +1,21 @@
+{
+  "name": "bookvault",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "serve": "vite",
+    "build": "tsc",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.14"
+  },
+  "dependencies": {
+    "json-server": "1.0.0-beta.3"
+  }
+}

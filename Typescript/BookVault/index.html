@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Library</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-book-open"></i>
+        <span>BookVault</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="#"><i class="fas fa-home"></i> Home</a>
+        <a href="#"><i class="fas fa-star"></i> Favorites</a>
+        <a href="#"><i class="fas fa-history"></i> History</a>
+      </div>
+
+      <!-- Cart -->
+      <div class="cart">
+        <button class="cart-btn" id="cart_btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="total_count">0</span>
+        </button>
+      </div>
+    </nav>
+    <div class="container">
+      <h1>Explore Our Library</h1>
+
+      <!-- Books Grid -->
+      <div id="books">
+        <div class="loader-container">
+          <span class="loader"></span>
+          <p>Loading books <strong>. . .</strong></p>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <p id="modal-text">This book is a classic!</p>
+          <div class="pointer"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./dist/index.js"></script>
+  </body>
+</html>
