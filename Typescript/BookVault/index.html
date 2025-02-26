@@ -36,8 +36,40 @@
         </button>
       </div>
     </nav>
+
     <div class="container">
       <h1>Explore Our Library</h1>
+
+      <!-- Search Section -->
+      <div class="search">
+        <div class="search-input">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            name="name"
+            placeholder="Search..."
+            id="search_name"
+          />
+        </div>
+
+        <div class="dropdown">
+          <button onclick="dropdownFunction()" class="dropbtn">
+            <i class="fas fa-filter"></i> Filter By
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div id="myDropdown" class="dropdown-content">
+            <label for="filter_name">
+              <input type="checkbox" name="name" id="filter_name" /> Title
+            </label>
+            <label for="filter_year">
+              <input type="checkbox" name="year" id="filter_year" /> Year
+            </label>
+            <label for="filter_genre">
+              <input type="checkbox" name="genre" id="filter_genre" /> Genre
+            </label>
+          </div>
+        </div>
+      </div>
 
       <!-- Books Grid -->
       <div id="books">

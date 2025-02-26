@@ -15,44 +15,65 @@ export const fetchBooks = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!Array.isArray(books)) {
             throw new Error("Fetched data is not an array");
         }
-        const bookHTML = books.map((book) => (`
+        return books;
+    }
+    catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+});
+// 3. Populate books
+export const populateBooks = (books) => {
+    try {
+        const bookHTML = books
+            .map((book) => `
       <div class="book_card" data-title="${book.title}">
-        <img src="${book.image}" alt="Book Image" />
+        <img src="${book.image}" alt="${book.title}" />
         <hr />
         <p><strong>${book.title}</strong> by <strong>${book.author}</strong> (${book.pages} pages)</p>
         <hr />
         <p><strong>Genre:</strong> ${book.genre} <strong>Publisher:</strong> ${book.publisher} <strong>Year:</strong> ${book.year}</p>
         <div class="buy_book">
-          <button 
-            class="buy_book_button" 
-            data-id="${book.id}" 
-            data-title="${book.title}" 
-            data-price="${book.price}">
+          <button
+            class="buy_book_button"
+            data-id="${book.id}"
+            data-title="${book.title}"
+            data-price="${book.price}"
+            data-image="${book.image}"
+          >
             Buy Now
           </button>
           <p><strong>Price:</strong> <span>ksh</span> ${book.price}</p>
         </div>
-      </div>`)).join('');
-        let booksinfodisplay = document.getElementById('books');
-        if (booksinfodisplay) {
-            booksinfodisplay.innerHTML = bookHTML;
+      </div>`)
+            .join("");
+        const booksDisplay = document.getElementById("books");
+        if (booksDisplay) {
+            booksDisplay.innerHTML = bookHTML;
         }
         else {
-            console.error("Element with ID 'books' not found.");
+            throw new Error("Element with ID 'books' not found.");
         }
     }
     catch (error) {
-        console.error("Error fetching your data");
+        console.error("Error populating books:", error);
     }
-});
-// adding eventListner to button Buy Now  when clicked
+};
+// 4. Event listener with improved type safety
 document.addEventListener("click", (event) => {
     const target = event.target;
     if (target.classList.contains("buy_book_button")) {
-        const bookId = parseInt(target.getAttribute("data-id") || "0");
-        const title = target.getAttribute("data-title") || "Unknown";
-        const price = parseFloat(target.getAttribute("data-price") || "0");
-        addToCart(bookId, title, price);
+        const bookId = target.dataset.id;
+        const title = target.dataset.title;
+        const price = target.dataset.price;
+        const image = target.dataset.image;
+        if (bookId && title && price && image) {
+            addToCart(parseInt(bookId), title, parseFloat(price), image);
+        }
+        else {
+            console.error("Missing data attributes on buy button");
+        }
     }
 });
+// 5. Execute the fetch and populate flow
 //# sourceMappingURL=books.js.map
