@@ -110,7 +110,22 @@ export function addNumbers(a: number, b: number): number {
     return a + b;
 }
 
-export function subtraction (a: number, b: number): number {
+export function subtraction(a: number, b: number): number {
     return a - b
 }
-// console.log(subtraction(10, 5))
+
+export type userInfo = {
+    name: string
+    age: number
+    isEligible: boolean
+}
+export const displayInformation = (user: userInfo): string => {
+    const isEligible = user.age > 17;
+    return `${user.name} isEligible to vote ${isEligible}`;
+};
+export const alexInfo: userInfo = {
+    name: 'karobia',
+    age: 13,
+    isEligible: false
+}
+console.log(displayInformation(alexInfo))

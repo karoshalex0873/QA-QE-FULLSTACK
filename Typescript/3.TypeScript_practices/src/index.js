@@ -7,6 +7,7 @@
 //     }
 // }
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.alexInfo = exports.displayInformation = void 0;
 exports.addNumbers = addNumbers;
 exports.subtraction = subtraction;
 // const result = getUsername(null)
@@ -95,4 +96,14 @@ function addNumbers(a, b) {
 function subtraction(a, b) {
     return a - b;
 }
-// console.log(subtraction(10, 5))
+const displayInformation = (user) => {
+    const isEligible = user.age > 17;
+    return `${user.name} isEligible to vote ${isEligible}`;
+};
+exports.displayInformation = displayInformation;
+exports.alexInfo = {
+    name: 'karobia',
+    age: 13,
+    isEligible: false
+};
+console.log((0, exports.displayInformation)(exports.alexInfo));
