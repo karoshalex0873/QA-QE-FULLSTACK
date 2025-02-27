@@ -3,6 +3,6 @@ pnpm install --save-dev typescript vitest nodemon prettier tsd vite-tsconfig-pat
 npx tsc --init 
 
 "scripts": {
-  "dev": "nodemon --exec npx ts-node src/index.ts"
+  "dev": "nodemon --  npx ts-node src/index.ts"
 }
 
