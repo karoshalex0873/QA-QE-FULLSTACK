@@ -15,7 +15,7 @@ export type BookInformationType = {
 
 export const fetchBooks = async (): Promise<BookInformationType[]> => {
   try {
-    const response = await fetch("http://localhost:3000/mybooks");
+    const response = await fetch("http://localhost:3001/api/books");
     const books: BookInformationType[] = await response.json();
 
     if (!Array.isArray(books)) {

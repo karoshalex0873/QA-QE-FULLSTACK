@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { addToCart } from "./cart";
 export const fetchBooks = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield fetch("http://localhost:3000/mybooks");
+        const response = yield fetch("http://localhost:3001/api/books");
         const books = yield response.json();
         if (!Array.isArray(books)) {
             throw new Error("Fetched data is not an array");

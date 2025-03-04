@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Library</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+
+    <button id="filterBtn">filterBtn</button>
+    <div class="container">
+      <h1>Explore Our Library</h1>
+
+      <!-- Search Section -->
+      <div class="search">
+        <div class="search-input">
+          <i class="fas fa-search"></i>
+          <p>Search By</p>
+          <!-- Example HTML structure -->
+          <input type="text" id="search_name" placeholder="Book title" />
+          <input
+            type="number"
+            id="search_year"
+            placeholder="Publication year"
+          />
+          <input type="text" id="search_genre" placeholder="Genre" />
+        </div>
+
+        <div class="dropdown">
+          <button onclick="dropdownFunctio()" class="dropbtn">
+            <i class="fas fa-filter"></i> Filter By
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div id="myDropdown" class="dropdown-content">
+            <label for="filter_name">
+              <input type="checkbox" name="name" id="filter_name" /> Title
+            </label>
+            <label for="filter_year">
+              <input type="checkbox" name="year" id="filter_year" /> Year
+            </label>
+            <label for="filter_genre">
+              <input type="checkbox" name="genre" id="filter_genre" /> Genre
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Books Grid -->
+      <div id="books">
+        <div class="loader-container">
+          <span class="loader"></span>
+          <p>Loading books <strong>. . .</strong></p>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <p id="modal-text">This book is a classic!</p>
+          <div class="pointer"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./dist/index.js"></script>
+  </body>
+</html>
