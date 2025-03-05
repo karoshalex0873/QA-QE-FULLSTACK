@@ -3,7 +3,6 @@ import dotenv from "dotenv"
 import cors from "cors"
 import path from "path";
 import { readFileSync } from "fs";
-import { title } from "process";
 
 dotenv.config()
 
@@ -20,7 +19,7 @@ app.get('/', (req, res) => {
 
 
 app.use(cors({
-  origin: "http://localhost:5174",  // Allow requests from Vite frontend
+  origin: "http://localhost:5173",  // Allow requests from Vite frontend
   methods: ["GET", "PUT", "POST", "DELETE"],
   credentials: true
 }))
@@ -34,7 +33,7 @@ const bookJson = readFileSync(
 const books = JSON.parse(bookJson)
 console.log(books)
 
-app.get('/api/books', (req, res) => {
+app.get('/api/books', (req:Request, res:Response) => {
 
   res.send(books.Books)
 })
