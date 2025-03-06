@@ -80,9 +80,15 @@ const applyFilters = async () => {
     filters.genre = searchGenreInput.value;
   }
 
+  // const queryParams = new URLSearchParams(filters as any).toString();
+  // window.history.pushState(null, "", `?${queryParams}`);
+  // const filteredBooks = await fetchBooksFilter(`?${queryParams}`);
   const queryParams = new URLSearchParams(filters as any).toString();
-  console.log(queryParams)
+
+// Update URL in the browser without reloading
+  window.history.pushState(null, "", `?${queryParams}`);
   const filteredBooks = await fetchBooksFilter(`?${queryParams}`);
+
 
   populateBooks(filteredBooks);
 };

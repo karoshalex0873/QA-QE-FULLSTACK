@@ -72,8 +72,12 @@ const applyFilters = () => __awaiter(void 0, void 0, void 0, function* () {
     if ((filterGenreCheckbox === null || filterGenreCheckbox === void 0 ? void 0 : filterGenreCheckbox.checked) && (searchGenreInput === null || searchGenreInput === void 0 ? void 0 : searchGenreInput.value)) {
         filters.genre = searchGenreInput.value;
     }
+    // const queryParams = new URLSearchParams(filters as any).toString();
+    // window.history.pushState(null, "", `?${queryParams}`);
+    // const filteredBooks = await fetchBooksFilter(`?${queryParams}`);
     const queryParams = new URLSearchParams(filters).toString();
-    console.log(queryParams);
+    // Update URL in the browser without reloading
+    window.history.pushState(null, "", `?${queryParams}`);
     const filteredBooks = yield fetchBooksFilter(`?${queryParams}`);
     populateBooks(filteredBooks);
 });
