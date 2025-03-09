@@ -15,27 +15,31 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- Navbar -->
+    <!-- Fixed Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand">Book Library</div>
+      <div class="nav-buttons">
+        <button class="nav-btn">Home</button>
+        <button class="nav-btn">Browse</button>
+        <button class="nav-btn">About</button>
+      </div>
+      <div class="user-icon">
+        <i class="fas fa-user" id="userBtn"></i>
+      </div>
+    </nav>
 
-    <button id="filterBtn">filterBtn</button>
     <div class="container">
       <h1>Explore Our Library</h1>
 
-      <!-- Search Section -->
+      <!-- Search Section (unchanged) -->
       <div class="search">
         <div class="search-input">
           <i class="fas fa-search"></i>
           <p>Search By</p>
-          <!-- Example HTML structure -->
           <input type="text" id="search_name" placeholder="Book title" />
-          <input
-            type="number"
-            id="search_year"
-            placeholder="Publication year"
-          />
+          <input type="number" id="search_year" placeholder="Publication year" />
           <input type="text" id="search_genre" placeholder="Genre" />
         </div>
-
         <div class="dropdown">
           <button onclick="dropdownFunctio()" class="dropbtn">
             <i class="fas fa-filter"></i> Filter By
@@ -55,7 +59,7 @@
         </div>
       </div>
 
-      <!-- Books Grid -->
+      <!-- Books Section (Using Flex) -->
       <div id="books">
         <div class="loader-container">
           <span class="loader"></span>
@@ -63,15 +67,40 @@
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Existing Modal (unchanged) -->
       <div id="modal" class="modal">
         <div class="modal-content">
-          <span class="close-btn">&times;</span>
+          <span class="close-btn">×</span>
           <p id="modal-text">This book is a classic!</p>
           <div class="pointer"></div>
         </div>
       </div>
+
+      <!-- New User Modal -->
+      <div id="userModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" id="closeUserModal">×</span>
+          <h2>User Login / Register</h2>
+          <form id="userForm">
+            <input type="text" placeholder="Username" required />
+            <input type="password" placeholder="Password" required />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script type="module" src="./dist/index.js"></script>
+    <script>
+      // Basic modal toggle (add this to your JS file later)
+      const userBtn = document.getElementById("userBtn");
+      const userModal = document.getElementById("userModal");
+      const closeUserModal = document.getElementById("closeUserModal");
+
+      userBtn.onclick = () => (userModal.style.display = "block");
+      closeUserModal.onclick = () => (userModal.style.display = "none");
+      window.onclick = (event) => {
+        if (event.target == userModal) userModal.style.display = "none";
+      };
+    </script>
   </body>
 </html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Library</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="font-Teko body">
+    <nav
+      class="fixed top-0 left-0 w-full z-50 bg-primary/30 backdrop-blur-md shadow-lg py-2"
+    >
+      <div
+        class="container mx-auto flex items-center justify-around px-[8%] py-4 gap-10"
+      >
+        <!-- Logo -->
+        <div
+          class="flex flex-col sm:flex-row items-center gap-3 text-light-100 text-2xl font-semibold"
+        >
+          <i class="fa-solid fa-book-open text-3xl"></i>
+          <span>Book Library</span>
+        </div>
+
+        <!-- Navigation Links (Desktop) -->
+        <div class="hidden md:flex gap-10 text-lg">
+          <a
+            href="#"
+            class="flex items-center space-x-2 text-light-100 hover:text-light-secondary transition"
+          >
+            <i class="fa-solid text-2xl fa-house-chimney"></i>
+            <span>Home</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-2 text-light-100 hover:text-light-secondary transition"
+          >
+            <i class="fa-solid fa-book text-2xl"></i>
+            <span>Browse</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-2 text-light-100 hover:text-light-secondary transition"
+          >
+            <i class="fa-solid fa-circle-info text-2xl"></i>
+            <span>About</span>
+          </a>
+        </div>
+
+        <!-- User Button -->
+        <div class="bg-light-100/20 px-3 py-3 rounded-full">
+          <button
+            id="userBtn"
+            class="text-light-100 hover:opacity-80 h-8 w-8 cursor-pointer"
+          >
+            <i class="fas fa-user-plus text-xl"></i>
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobileMenuBtn"
+          class="md:hidden text-light-100 font-bold cursor-pointer"
+        >
+          <i class="fas fa-bars text-3xl"></i>
+          <p>Menu</p>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden absolute top-full right-5 bg-gray-400/20 rounded-2xl bg-/80 backdrop-blur-md shadow-md px-10 py-6 space-y-4"
+      >
+        <a href="#" class="block text-light-100 hover:text-light-secondary"
+          >Home</a
+        >
+        <a href="#" class="block text-light-100 hover:text-light-secondary"
+          >Browse</a
+        >
+        <a href="#" class="block text-light-100 hover:text-light-secondary"
+          >About</a
+        >
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 pt-30 pb-8">
+      <h1 class="text-3xl font-bold mb-8 px-10 text-center text-light-200">
+        <i class="fas text-4xl fa-binoculars mr-2"></i>Explore Our Library
+      </h1>
+
+      <!-- Search Section -->
+      <div class="flex flex-col md:flex-row gap-4 justify-center mb-8 w-d">
+        <div
+          class="p-4 rounded-lg shadow-sm flex items-center gap-4 w-full max-w-3xl bg-gray-300/60"
+        >
+          <i class="fas fa-search text-primary text-xl"></i>
+          <input
+            type="text"
+            id="search_name"
+            placeholder="Book title"
+            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200"
+          />
+          <i class="fas fa-calendar-alt text-primary text-xl"></i>
+          <input
+            type="number"
+            id="search_year"
+            placeholder="Publication year"
+            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200 focus:outline-none"
+          />
+          <i class="fas fa-tag text-primary text-xl"></i>
+          <input
+            type="text"
+            id="search_genre"
+            placeholder="Genre"
+            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200 focus:outline-none"
+          />
+        </div>
+
+        <div class="relative">
+          <button
+            onclick="toggleDropdown()"
+            class="px-4 py-2 rounded-lg transition-colors w-[200px] bg-light-100 text-primary"
+          >
+            <i class="fas fa-filter mr-2"></i>Filter By<i
+              class="fas fa-chevron-down ml-2"
+            ></i>
+          </button>
+
+          <div
+            id="myDropdown"
+            class="hidden absolute right-0 mt-2 bg-light-100 rounded-lg shadow-lg p-4 min-w-[200px]"
+          >
+            <select
+              id="filterOptions"
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none"
+              onchange="applyFilter()"
+            >
+              <option value="">Select...</option>
+              <option value="title">Title</option>
+              <option value="year">Year</option>
+              <option value="genre">Genre</option>
+            </select>
+          </div>
+        </div>
+        <!-- adding a book -->
+        <div class="relative">
+          <button
+            id="bookadd"
+            class="px-4 py-2 rounded-lg transition-colors w-[200px] bg-light-100 text-primary cursor-pointer"
+          >
+            <i class="fas fa-folder-plus mr-2"></i>Add a book<i></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Books Grid -->
+      <div id="books" class="flex flex-wrap justify-start gap-4 p-4 sm:p-6">
+        <!-- Loader and content -->
+        <!-- Updated loader with primary color -->
+        <div
+          class="loader-container flex flex-col items-center justify-center py-8"
+        >
+          <div
+            class="w-16 h-16 border-4 rounded-full border-t-primary text-light-100 animate-spin-custom"
+          ></div>
+          <p class="mt-4 text-light-200">
+            <i class="fas fa-spinner mr-2 animate-spin-custom"></i>Loading books
+            <strong>. . .</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- Modals -->
+      <!-- Book  Modal Container -->
+      <div id="bookModal" class="absolute hidden top-60 right-0 bg-black/40">
+        <div
+          class="bg-light-100/60 backdrop-blur-md rounded-lg shadow-lg w-full max-w-sm sm:max-w-lg p-6 relative text-primary"
+        >
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center border-b pb-2 mb-4">
+            <h2
+              class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-primary"
+            >
+              Add a New Book
+            </h2>
+            <button
+              id="closeModal"
+              class="text-2xl font-extrabold hover:text-red-700 bg-primary/10 px-3 rounded-full h-10 w-10 cursor-pointer"
+            >
+              &times;
+            </button>
+          </div>
+
+          <!-- Modal Form -->
+          <form id="bookForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                id="bookId"
+                name="bookId"
+                placeholder="Book ID"
+                class="addbook"
+              />
+
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Title"
+                class="addbook"
+              />
+
+              <input
+                type="text"
+                id="author"
+                name="author"
+                placeholder="Author"
+                class="addbook"
+              />
+
+              <input
+                type="text"
+                id="genre"
+                name="genre"
+                placeholder="Genre"
+                class="addbook"
+              />
+
+              <input
+                type="number"
+                id="year"
+                name="year"
+                placeholder="Year"
+                min="0"
+                class="addbook"
+              />
+
+              <input
+                type="number"
+                id="pages"
+                name="pages"
+                placeholder="Pages"
+                min="1"
+                class="addbook"
+              />
+
+              <input
+                type="text"
+                id="publisher"
+                name="publisher"
+                placeholder="Publisher"
+                class="addbook"
+              />
+
+              <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Price (Ksh)"
+                min="0"
+                step="0.01"
+                class="addbook"
+              />
+            </div>
+
+            <textarea
+              name="description"
+              id="description"
+              placeholder="Description"
+              rows="3"
+              class="addbook"
+            ></textarea>
+
+            <input
+              type="url"
+              name="image"
+              id="image"
+              placeholder="Image URL"
+              class="addbook"
+            />
+
+            <input
+              type="url"
+              name="pdf"
+              id="pdf"
+              placeholder="PDF URL"
+              class="addbook"
+            />
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="bg-primary cursor-pointer text-white px-4 py-2 rounded-md w-full sm:w-[90%] mx-auto block"
+            >
+              Add Book
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- register user modal -->
+      <div
+        id="userRegisterModal"
+        class="hidden absolute-pos right-10 top-24 z-50 max-w-sm rounded-2xl px-2 bg-light-100/80"
+      >
+        <!-- form div -->
+        <div class="rounded-lg py-4 max-w-md w-full">
+          <i class="fas fa window-close"></i>
+          <h2 class="text-2xl font-bold mb-4">
+            <i class="fas fa-user-circle mr-2"></i>Register
+          </h2>
+          <!-- form -->
+          <form id="registerForm" class="space-y-4">
+            <!-- Username -->
+            <div class="relative">
+              <i class="fas fa-user absolute left-3 top-3 text-light-100"></i>
+              <input
+                type="text"
+                id="registerUsername"
+                placeholder="Username"
+                class="w-full px-4 py-2 pl-10 rounded-lg focus:outline-none bg-gray-500"
+              />
+            </div>
+            <!-- Email -->
+            <div class="relative">
+              <i
+                class="fas fa-envelope absolute left-3 top-3 text-light-100"
+              ></i>
+              <input
+                id="registerEmail"
+                type="email"
+                placeholder="Email"
+                class="w-full px-4 py-2 pl-10 rounded-lg focus:outline-none bg-gray-500"
+              />
+            </div>
+            <!-- Password -->
+            <div class="relative">
+              <i class="fas fa-lock absolute left-3 top-3 text-light-100"></i>
+              <input
+                id="registerPassword"
+                type="password"
+                placeholder="Password"
+                class="w-full px-4 py-2 pl-10 rounded-lg focus:outline-none bg-gray-500"
+              />
+            </div>
+            <!-- submit button -->
+            <div class="flex justify-center items-center">
+              <button
+                type="submit"
+                class="w-[50%] py-2 rounded-lg transition-colors hover:opacity-80 bg-primary/20 cursor-pointer"
+              >
+                <i class="fas fa-user-plus mr-2"></i>Register
+              </button>
+            </div>
+            <p class="text-center mt-4">
+              Already have an account?
+              <a href="#" id="showLogin" class="text-primary hover:underline"
+                >Login here</a
+              >
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Login hidden  modal -->
+      <div
+        id="userLoginModal"
+        class="hidden absolute-pos right-10 top-24 z-50 rounded-2xl px-2 bg-light-100/80"
+      >
+        <!-- form div -->
+        <div class="rounded-lgpy-4 max-w-md w-full">
+          <i class="fas fa window-close"></i>
+          <h2 class="text-2xl font-bold mb-4">
+            <i class="fas fa-user-circle mr-2"></i>Login
+          </h2>
+          <!-- form -->
+          <form id="loginForm" class="space-y-4">
+            <!-- Email -->
+            <div class="relative">
+              <i
+                class="fas fa-envelope absolute left-3 top-3 text-light-100"
+              ></i>
+              <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email"
+                class="w-full px-4 py-2 pl-10 rounded-lg focus:outline-none bg-gray-500"
+              />
+            </div>
+            <!-- Password -->
+            <div class="relative">
+              <i class="fas fa-lock absolute left-3 top-3 text-light-100"></i>
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password"
+                class="w-full px-4 py-2 pl-10 rounded-lg focus:outline-none bg-gray-500"
+              />
+            </div>
+            <!-- submit button -->
+            <div class="flex justify-center items-center">
+              <button
+                type="submit"
+                class="w-[50%] py-2 rounded-lg transition-colors hover:opacity-80 bg-primary/20"
+              >
+                <i class="fas fa-sign-in-alt mr-2"></i>Login
+              </button>
+            </div>
+            <p class="text-center mt-4">
+              Don't have an account?
+              <a href="#" id="showRegister" class="text-primary hover:underline"
+                >Register here</a
+              >
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Message Modal -->
+      <div
+        id="messageModal"
+        class="hidden fixed bottom-30 right-6 max-w-x shadow-lg px-4 py-3 border border-gray-300 items-center space-x-3 animate-fadeIn"
+      >
+        <!-- Message -->
+        <p id="messageText" class="text-sm font-medium"></p>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById("mobileMenuBtn").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+
+    //fileter menu
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("hidden");
+    }
+
+    function applyFilter() {
+      const filterValue = document.getElementById("filterOptions").value;
+
+      if (filterValue) {
+        alert(filterValue); // Replace with actual logic
+      }
+    }
+    // add a book button open
+    document
+      .getElementById("closeModal")
+      .addEventListener("click", function () {
+        document.getElementById("bookModal").classList.add("hidden");
+      });
+    document.getElementById("bookadd").addEventListener("click", function () {
+      document.getElementById("bookModal").classList.remove("hidden");
+    });
+  </script>
+  <script type="module" src="./dist/index.js"></script>
+</html>
