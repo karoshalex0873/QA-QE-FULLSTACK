@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { showMessage } from "./modal";
 // fecthig book from an endpoint
 export const fetchBooks = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,14 +26,17 @@ export const fetchBooks = () => __awaiter(void 0, void 0, void 0, function* () {
 // serching endpoint
 export const fetchBooksFilter = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (queryParams = "") {
     try {
-        const response = yield fetch(`http://localhost:3001/api/books/filter${queryParams}`, {
+        const response = yield fetch(`http://localhost:3000/api/v1/books/filter${queryParams}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
         });
         if (!response.ok) {
-            throw new Error(`Failed to fecthc books`);
+            showMessage("erros", true);
+            setTimeout(() => {
+                fetchBooks();
+            }, 5000);
         }
         return yield response.json();
     }
@@ -41,5 +45,4 @@ export const fetchBooksFilter = (...args_1) => __awaiter(void 0, [...args_1], vo
         return [];
     }
 });
-// adding books in the databse
 //# sourceMappingURL=endpoints_Fetching.js.map

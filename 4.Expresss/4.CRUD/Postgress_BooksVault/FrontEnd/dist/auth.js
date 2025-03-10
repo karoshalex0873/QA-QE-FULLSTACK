@@ -125,7 +125,6 @@ const handleFormSubmit = (event) => __awaiter(void 0, void 0, void 0, function* 
     }
     // ✅ Get form element
     const bookForm = event.target;
-    // ✅ Get form values
     const bookData = {
         bookId: document.getElementById("bookId").value.trim(),
         title: document.getElementById("title").value.trim(),
@@ -138,7 +137,7 @@ const handleFormSubmit = (event) => __awaiter(void 0, void 0, void 0, function* 
         description: document.getElementById("description").value.trim(),
         image: document.getElementById("image").value.trim(),
         pdf: document.getElementById("pdf").value.trim(),
-        user_id: userId, // ✅ Attach user ID
+        user_id: userId,
     };
     try {
         const response = yield fetch("http://localhost:3000/api/v1/books", {

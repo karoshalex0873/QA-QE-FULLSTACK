@@ -1,5 +1,5 @@
 // format of developing a server
-import express, { Request, Response } from 'express'
+import express, { query, Request, Response } from 'express'
 import dotenv from "dotenv"
 import pool from '../db/db'
 import bcrypt, { compare } from 'bcryptjs';
@@ -60,7 +60,7 @@ app.post('/api/v1/user', async (req: Request, res: Response) => {
     })
   }
 })
-
+// login the user
 app.post('/api/v1/user/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body
@@ -108,7 +108,6 @@ app.post('/api/v1/user/login', async (req: Request, res: Response) => {
 })
 
 // addig books to database using post
-
 app.post('/api/v1/books', async (req: Request, res: Response) => {
   try {
     const {
@@ -178,6 +177,39 @@ app.get('/api/v1/books', async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// filterFunction
+app.get('/api/v1/books/filter', async (req: Request, res: Response) => {
+  try {
+    const {title,genre,year}=req.query
+    const books= await pool.query("SELECT * FROM books")
+    let filteredBooks=[...books.rows]
+
+    if(title){
+      filteredBooks=filteredBooks.filter((book)=>book.title.toLowerCase().includes((title as string).toLowerCase()))
+    }
+
+    if(genre){
+      filteredBooks=filteredBooks.filter((book)=>book.genre.toLowerCase().includes((genre as string).toLowerCase()))
+    }
+    if (year) {
+      filteredBooks = filteredBooks.filter(book => 
+        book.year.toString().includes(year as string)
+      );
+    }
+
+    if(filteredBooks.length === 0){
+      res.status(404).json({message:"No books found mathing your criteria."})
+      return
+    }
+
+    res.send(filteredBooks)
+
+  } catch (error) {
+    console.error("Error filtering  books:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+})
 
 // getting a single book by 
 app.get('/api/v1/books/:id', async (req: Request, res: Response) => {
@@ -289,6 +321,9 @@ app.delete('/api/v1/books/:id', async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// filter books
+
 
 
 

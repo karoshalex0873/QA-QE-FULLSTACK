@@ -78,11 +78,16 @@ export const showMessage = (message: string, isSuccess: boolean = true) => {
   // Set message text
   messageText.textContent = message;
 
-  // Apply success/error styles
-  modal.classList.remove("hidden", "error", "success");
+  // Remove "hidden" first
+  modal.classList.remove("hidden");
+
+  // Reset styles
+  modal.classList.remove("error", "success");
+
+  // Apply correct class
   modal.classList.add(isSuccess ? "success" : "error");
 
-  // Show modal
+  // Ensure visibility
   modal.classList.add("opacity-100");
 
   // Hide modal after 5 seconds
@@ -90,3 +95,4 @@ export const showMessage = (message: string, isSuccess: boolean = true) => {
     modal.classList.add("hidden");
   }, 5000);
 };
+

@@ -140,7 +140,7 @@ const handleFormSubmit = async (event: SubmitEvent) => {
   // ✅ Get form element
   const bookForm = event.target as HTMLFormElement;
 
-  // ✅ Get form values
+  
   const bookData: BookFormData = {
     bookId: (document.getElementById("bookId") as HTMLInputElement).value.trim(),
     title: (document.getElementById("title") as HTMLInputElement).value.trim(),
@@ -153,7 +153,7 @@ const handleFormSubmit = async (event: SubmitEvent) => {
     description: (document.getElementById("description") as HTMLTextAreaElement).value.trim(),
     image: (document.getElementById("image") as HTMLInputElement).value.trim(),
     pdf: (document.getElementById("pdf") as HTMLInputElement).value.trim(),
-    user_id: userId, // ✅ Attach user ID
+    user_id: userId, 
   };
 
   try {

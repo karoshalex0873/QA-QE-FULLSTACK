@@ -1,4 +1,5 @@
-import { BookFormData, BookInformationType } from "./Types";
+import { showMessage } from "./modal";
+import {BookInformationType } from "./Types";
 
 // fecthig book from an endpoint
 export const fetchBooks = async (): Promise<BookInformationType[]> => {
@@ -19,7 +20,7 @@ export const fetchBooks = async (): Promise<BookInformationType[]> => {
 // serching endpoint
 export const fetchBooksFilter = async (queryParams: string = "") => {
   try {
-    const response = await fetch(`http://localhost:3001/api/books/filter${queryParams}`, {
+    const response = await fetch(`http://localhost:3000/api/v1/books/filter${queryParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -27,11 +28,10 @@ export const fetchBooksFilter = async (queryParams: string = "") => {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to fecthc books`)
+      showMessage(`ther was an erraor fecting your books`,false)
     }
 
     return await response.json()
-
 
   } catch (error) {
     console.error("Error fecting events", error)
@@ -39,7 +39,7 @@ export const fetchBooksFilter = async (queryParams: string = "") => {
   }
 }
 
-// adding books in the databse
+
 
 
 
