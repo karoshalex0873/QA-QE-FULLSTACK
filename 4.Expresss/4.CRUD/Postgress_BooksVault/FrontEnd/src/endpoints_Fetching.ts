@@ -25,19 +25,20 @@ export const fetchBooksFilter = async (queryParams: string = "") => {
       headers: {
         "Content-Type": "application/json"
       }
-    })
+    });
 
     if (!response.ok) {
-      showMessage(`ther was an erraor fecting your books`,false)
+      throw new Error("Error fetching books. Please try again later.");
     }
 
-    return await response.json()
-
+    return await response.json();
   } catch (error) {
-    console.error("Error fecting events", error)
-    return [];
+    console.error("Error fetching books:", error);
+    showMessage("Failed to fetch books. Please check your connection.", false);
+    return []; // Ensure an empty array is returned to avoid breaking code
   }
-}
+};
+
 
 
 

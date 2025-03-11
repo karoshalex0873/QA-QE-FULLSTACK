@@ -15,6 +15,12 @@
       href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Outfit:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Charm:wght@400;700&family=Outfit:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="font-Teko body">
@@ -99,89 +105,124 @@
       </h1>
 
       <!-- Search Section -->
-      <div class="flex flex-col md:flex-row gap-4 justify-center mb-8 w-d">
+      <div
+        class="flex flex-col md:flex-row gap-2 sm:gap-4 items-center w-full mb-8 px-4"
+      >
+        <!-- Search Inputs -->
         <div
-          class="p-4 rounded-lg shadow-sm flex items-center gap-4 w-full max-w-3xl bg-gray-300/60"
+          class="flex flex-1 flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:max-w-3xl"
         >
-          <i class="fas fa-search text-primary text-xl"></i>
-          <input
-            type="text"
-            id="search_name"
-            placeholder="Book title"
-            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200"
-          />
-          <i class="fas fa-calendar-alt text-primary text-xl"></i>
-          <input
-            type="number"
-            id="search_year"
-            placeholder="Publication year"
-            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200 focus:outline-none"
-          />
-          <i class="fas fa-tag text-primary text-xl"></i>
-          <input
-            type="text"
-            id="search_genre"
-            placeholder="Genre"
-            class="rounded-lg bg-gray-500 px-4 py-2 w-full focus:bg-light-200 focus:outline-none"
-          />
-        </div>
+          <!-- Title Search -->
+          <div class="flex items-center gap-2 flex-1">
+            <i class="fas fa-search text-primary text-sm sm:text-base"></i>
+            <input
+              type="text"
+              id="search_name"
+              placeholder="Title"
+              class="rounded-lg bg-gray-500 px-2 sm:px-3 py-1.5 sm:py-2 w-full text-sm"
+            />
+          </div>
 
-        <div class="relative">
-          <button
-            onclick="toggleDropdown()"
-            class="px-4 py-2 rounded-lg transition-colors w-[200px] bg-light-100 text-primary"
-          >
-            <i class="fas fa-filter mr-2"></i>Filter By<i
-              class="fas fa-chevron-down ml-2"
+          <!-- Year Search -->
+          <div class="flex items-center gap-2 flex-1">
+            <i
+              class="fas fa-calendar-alt text-primary text-sm sm:text-base"
             ></i>
-          </button>
+            <input
+              type="number"
+              id="search_year"
+              placeholder="Year"
+              class="rounded-lg bg-gray-500 px-2 sm:px-3 py-1.5 sm:py-2 w-full text-sm"
+            />
+          </div>
 
-          <div
-            id="myDropdown"
-            class="hidden absolute right-0 mt-2 bg-light-100 rounded-lg shadow-lg p-4 min-w-[200px]"
-          >
-            <select
-              id="filterOptions"
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none"
-            >
-              <option value="">Select...</option>
-              <option value="title">Title</option>
-              <option value="year">Year</option>
-              <option value="genre">Genre</option>
-            </select>
+          <!-- Genre Search -->
+          <div class="flex items-center gap-2 flex-1">
+            <i class="fas fa-tag text-primary text-sm sm:text-base"></i>
+            <input
+              type="text"
+              id="search_genre"
+              placeholder="Genre"
+              class="rounded-lg bg-gray-500 px-2 sm:px-3 py-1.5 sm:py-2 w-full text-sm"
+            />
           </div>
         </div>
-        <!-- adding a book -->
-        <div class="relative">
+
+        <!-- Buttons Container -->
+        <div class="flex sm:flex-nowrap gap-2 sm:gap-4 w-full sm:w-auto">
+          <!-- Filter Dropdown -->
+          <div class="relative flex-1 sm:w-[160px]">
+            <button
+              onclick="toggleDropdown()"
+              class="px-3 py-1.5 sm:py-2 w-full rounded-lg bg-light-100 text-primary text-sm cursor-pointer"
+            >
+              <i class="fas fa-filter mr-1"></i>Filter
+            </button>
+            <div
+              id="myDropdown"
+              class="hidden absolute right-0 mt-1 bg-light-100 rounded-lg shadow-lg p-2 min-w-[160px]"
+            >
+              <select
+                id="filterOptions"
+                class="w-full px-2 py-1.5 rounded-lg border border-gray-300 text-sm"
+              >
+                <option value="">Select filter...</option>
+                <option value="title">Title</option>
+                <option value="year">Year</option>
+                <option value="genre">Genre</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Add Book Button -->
           <button
             id="bookadd"
-            class="px-4 py-2 rounded-lg transition-colors w-[200px] bg-light-100 text-primary cursor-pointer"
+            class="px-3 py-1.5 sm:py-2 rounded-lg bg-light-100 text-primary cursor-pointer text-sm flex-1 sm:w-[140px]"
           >
-            <i class="fas fa-folder-plus mr-2"></i>Add a book<i></i>
+            <i class="fas fa-folder-plus mr-1"></i>Add Book
           </button>
         </div>
       </div>
 
       <!-- Books Grid -->
       <div id="books" class="flex flex-wrap justify-start gap-4 p-4 sm:p-6">
-        <!-- Loader and content -->
-        <!-- Updated loader with primary color -->
+        <!-- loder and content -->
+        <div class="w-full h-80 justify-center flex items-center">
+          <div
+            id="loader_books"
+            class="hidden flex-col items-center justify-center py-8"
+          >
+            <div
+              class="w-24 h-24 border-4 rounded-full border-t-green-700 text-light-100 animate-spin-custom ml-10"
+            ></div>
+            <p class="mt-4 text-light-200 font-orbitron text-4xl">
+              <i class="fas text-3xl fa-spinner mr-2 animate-spin-custom"></i>
+              Loading books
+              <strong class="text-5xl">. . .</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Loder outside while fechting -->
+      <div class="justify-center flex items-center">
         <div
-          class="loader-container flex flex-col items-center justify-center py-8"
+          id="loader"
+          class="hidden flex-col items-center justify-center py-8"
         >
           <div
-            class="w-16 h-16 border-4 rounded-full border-t-primary text-light-100 animate-spin-custom"
+            class="w-24 h-24 border-4 rounded-full border-t-primary text-light-100 animate-spin-custom ml-10"
           ></div>
           <p class="mt-4 text-light-200">
-            <i class="fas fa-spinner mr-2 animate-spin-custom"></i>Loading books
-            <strong>. . .</strong>
+            <i class="fas text-2xl fa-spinner mr-2 animate-spin-custom"></i>
+            Loading books
+            <strong class="text-5xl">. . .</strong>
           </p>
         </div>
       </div>
 
       <!-- Modals -->
       <!-- Book  Modal Container -->
-      <div id="bookModal" class="absolute hidden top-60 right-0 bg-black/40">
+      <div id="bookModal" class="absolute hidden top-52 right-5 overflow-hidden bg-black/40">
         <div
           class="bg-light-100/60 backdrop-blur-md rounded-lg shadow-lg w-full max-w-sm sm:max-w-lg p-6 relative text-primary"
         >
@@ -428,12 +469,19 @@
       <!-- Message Modal -->
       <div
         id="messageModal"
-        class="hidden fixed  bottom-[50%] items-center  justify-center  h-36  w-sm  shadow-lg px-4 py-3 border border-gray-300/30  space-x-3 transition-opacity duration-300 opacity-100"
+        class="hidden fixed bubble-container bottom-[50%] items-center justify-center h-36 w-sm shadow-lg px-4 py-3"
       >
         <!-- Message -->
-        <p id="messageText" class="text-xl font-medium"></p>
+        <p id="messageText" class="font-serif font-normal italic">hi</p>
       </div>
     </div>
+    <svg class="hidden">
+      <defs>
+        <clipPath id="messageBubble" clipPathUnits="objectBoundingBox">
+          <path d="M0.95,0.15 Q0.98,0.05 0.95,0 H0.8 Q0.2,0 0,0.2 V0.8 Q0,1 0.2,1 H0.7 Q0.8,1 0.85,0.95 L0.95,0.85 Q1,0.8 1,0.7 V0.3 Q1,0.2 0.95,0.15"/>
+        </clipPath>
+      </defs>
+    </svg>
   </body>
   <script>
     document.getElementById("mobileMenuBtn").addEventListener("click", () => {

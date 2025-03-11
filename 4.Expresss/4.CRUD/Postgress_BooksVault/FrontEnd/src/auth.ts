@@ -40,7 +40,7 @@ export const registerUser = async () => {
       const data = await response.json();
 
       if (response.ok) {
-        showMessage("Registration successful!", true);
+        showMessage("✔️ Registration successful!", true);
         registerForm.reset();
 
         // Hide register modal & show login modal
@@ -101,7 +101,7 @@ export const loginUser = async () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
 
-        showMessage("✅ Login successful!", true);
+        showMessage("✔️ Login successful!", true);
         loginForm.reset();
         document.getElementById("userLoginModal")?.classList.add("hidden");
 
@@ -164,11 +164,17 @@ const handleFormSubmit = async (event: SubmitEvent) => {
     });
 
     if (!response.ok) {
-      showMessage("❌ Failed to add book",false);
+      showMessage("⚠️ Failed to add book !",false);
     }
 
     const result = await response.json();
-    showMessage(result.message);
+
+    if(response.status ===201){
+      showMessage(result.message,true)
+    }else{
+      showMessage(result.message,false)
+    }
+    // showMessage(result.message);
     
     bookForm.reset();
   } catch (error) {

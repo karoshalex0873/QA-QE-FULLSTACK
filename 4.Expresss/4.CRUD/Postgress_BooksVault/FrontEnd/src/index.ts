@@ -15,12 +15,22 @@ document.getElementById("search_name")?.addEventListener("input", applyFilter);
 document.getElementById("search_year")?.addEventListener("input", applyFilter);
 document.getElementById("search_genre")?.addEventListener("input", applyFilter);
 
-
-setTimeout(() => {
-  fetchBooks()
-  .then((books) => {
-    console.log("Fetched books:", books);
-    populateBooks(books);
-  })
-  .catch((error) => console.error("Fetch error:", error));
-}, 2000);
+const loader = document.getElementById("loader_books") as HTMLDivElement | null;
+  loader?.classList.remove("hidden")
+  setTimeout(() => {
+    fetchBooks()
+      .then((books) => {
+        const booksContainer = document.getElementById("books") as HTMLDivElement | null;
+  
+        if (!booksContainer) return; // Ensure container exists
+  
+        if (books.length === 0) {
+          booksContainer.innerHTML = "<p class='text-center text-light-100 text-4xl font-orbitron '>No books available</p>";
+        } else {
+          console.log("Fetched books:", books);
+          populateBooks(books);
+        }
+      })
+      .catch((error) => console.error("Fetch error:", error));
+  }, 2000);
+  

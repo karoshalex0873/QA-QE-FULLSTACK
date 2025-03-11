@@ -119,13 +119,13 @@ app.post('/api/v1/books', async (req: Request, res: Response) => {
 
     //  Check if `user_id` is provided
     if (!user_id) {
-      res.status(400).json({ message: "❌ User ID is required" });
+      res.status(400).json({ message: "⚠️ User ID is required !"  });
       return
     }
 
     if (!title || !author || !genre || !pages || !price) {
       res.status(400).json({
-        message: "❌ Missing required fields: title, author, genre, pages, or price"
+        message: " Missing required fields: title, author, genre, pages, or price !"
       });
       return
     }
@@ -155,7 +155,7 @@ app.post('/api/v1/books', async (req: Request, res: Response) => {
     );
 
     res.status(201).json({
-      message: "The book was uploaded successfully",
+      message: "✔️ The book was uploaded successfully",
       book: bookResult.rows[0]
     });
 
@@ -322,7 +322,7 @@ app.delete('/api/v1/books/:id', async (req: Request, res: Response) => {
   }
 });
 
-// filter books
+
 
 
 

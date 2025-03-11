@@ -14,6 +14,8 @@
 
   --font-orbitron: "Charm";
 
+  --font-roboto:"Roboto Condensed", sans-serif;
+
   --breakpoint-xs: 480px;
 
 }
@@ -37,29 +39,61 @@
     @apply text-2xl font-bold text-white sm:text-3xl;
   }
 
-  .error{
-    @apply  bg-light-200 text-center  w-[250px] rounded-b-xl rounded-tr-2xl font-extralight  text-[#9e0909];
-  }
-  .success{
-    @apply bg-light-100 text-center w-[250px] rounded-b-xl rounded-tr-2xl     font-extralight  text-[#286d28]
-  }
+  
   .addbook{
     @apply p-2 border-none focus:outline-none rounded w-full bg-primary/40  focus:bg-primary/20 px-5
   }
 }
 
+@layer components {
+  .bubble-container {
+    @apply shadow-lg border border-gray-300/30 rounded-b-4xl rounded-tr-4xl text-center flex text-xl ;
+    clip-path: url(#messageBubble);
+  }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  .error {
+    @apply bg-white font-serif text-red-600;
+  }
+
+  .success {
+    @apply bg-white font-roboto text-green-500;
+    backdrop-filter: blur(6px);
+    
+  }
 }
 
-.animate-spin-custom {
-  animation: spin 1s linear infinite;
+@layer utilities {
+  .bubble-tail {
+    clip-path: url(#messageBubble);
+  }
 }
 
-.absolute-pos {
-  position: fixed;
-  right: 2.5rem; /* right-10 */
-  top: 6rem; /* top-24 */
+
+@layer utilities {
+  .animate-spin-custom {
+    animation: spin 1s linear infinite;
+  }
+
+  .absolute-pos {
+    @apply fixed right-10 top-24;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-4px) rotate(1deg); }
+    100% { transform: translateY(0) rotate(-1deg); }
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .transition-bubble {
+    @apply transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)];
+  }
 }

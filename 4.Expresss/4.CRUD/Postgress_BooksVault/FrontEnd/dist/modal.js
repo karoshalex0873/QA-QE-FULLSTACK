@@ -62,21 +62,15 @@ export const setupModals = () => {
 export const showMessage = (message, isSuccess = true) => {
     const modal = document.getElementById("messageModal");
     const messageText = document.getElementById("messageText");
-    if (!modal || !messageText)
+    if (!modal || !messageText) {
+        console.error("Message modal elements not found.");
         return;
-    // Set message text
+    }
     messageText.textContent = message;
-    // Remove "hidden" first
-    modal.classList.remove("hidden");
-    // Reset styles
-    modal.classList.remove("error", "success");
-    // Apply correct class
-    modal.classList.add(isSuccess ? "success" : "error");
-    // Ensure visibility
-    modal.classList.add("opacity-100");
-    // Hide modal after 5 seconds
+    modal.classList.remove("hidden", "error", "success");
+    modal.classList.add(isSuccess ? "success" : "error", "opacity-100");
     setTimeout(() => {
         modal.classList.add("hidden");
-    }, 5000);
+    }, 2000);
 };
 //# sourceMappingURL=modal.js.map

@@ -70,29 +70,21 @@ export const setupModals = () => {
 
 // messages alert modal
 export const showMessage = (message: string, isSuccess: boolean = true) => {
-  const modal = document.getElementById("messageModal") as HTMLDivElement;
-  const messageText = document.getElementById("messageText") as HTMLParagraphElement;
+  const modal = document.getElementById("messageModal") as HTMLDivElement | null;
+  const messageText = document.getElementById("messageText") as HTMLParagraphElement | null;
 
-  if (!modal || !messageText) return;
+  if (!modal || !messageText) {
+    console.error("Message modal elements not found.");
+    return;
+  }
 
-  // Set message text
   messageText.textContent = message;
+  modal.classList.remove("hidden", "error", "success");
+  modal.classList.add(isSuccess ? "success" : "error", "opacity-100");
 
-  // Remove "hidden" first
-  modal.classList.remove("hidden");
-
-  // Reset styles
-  modal.classList.remove("error", "success");
-
-  // Apply correct class
-  modal.classList.add(isSuccess ? "success" : "error");
-
-  // Ensure visibility
-  modal.classList.add("opacity-100");
-
-  // Hide modal after 5 seconds
   setTimeout(() => {
     modal.classList.add("hidden");
-  }, 5000);
+  }, 2000);
 };
+
 

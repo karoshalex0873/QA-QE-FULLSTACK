@@ -8,42 +8,58 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { populateBooks } from "./books";
-import { fetchBooksFilter } from "./endpoints_Fetching";
+import { fetchBooks, fetchBooksFilter } from "./endpoints_Fetching";
 import { showMessage } from "./modal";
 export const applyFilter = () => __awaiter(void 0, void 0, void 0, function* () {
-    const filters = {};
-    // Get dropdown selection
-    const filterElement = document.getElementById("filterOptions");
-    const selectedFilter = filterElement ? filterElement.value.toLowerCase() : "";
-    // Get input elements
-    const searchTitleInput = document.getElementById("search_name");
-    const searchYearInput = document.getElementById("search_year");
-    const searchGenreInput = document.getElementById("search_genre");
-    // let isFilterApplied = false;
-    if (selectedFilter === "title" && (searchTitleInput === null || searchTitleInput === void 0 ? void 0 : searchTitleInput.value.trim())) {
-        filters.title = searchTitleInput.value.trim();
-        // isFilterApplied = true;
+    const loader = document.getElementById("loader"); // Consistent selector
+    try {
+        const filters = {};
+        // Get UI elements
+        const filterElement = document.getElementById("filterOptions");
+        const searchTitleInput = document.getElementById("search_name");
+        const searchYearInput = document.getElementById("search_year");
+        const searchGenreInput = document.getElementById("search_genre");
+        const selectedFilter = (filterElement === null || filterElement === void 0 ? void 0 : filterElement.value.toLowerCase()) || "";
+        // Show loader and clear books
+        loader === null || loader === void 0 ? void 0 : loader.classList.remove("hidden");
+        populateBooks([]);
+        // Build filters
+        if (selectedFilter === "title" && (searchTitleInput === null || searchTitleInput === void 0 ? void 0 : searchTitleInput.value.trim())) {
+            filters.title = searchTitleInput.value.trim();
+        }
+        else if (selectedFilter === "genre" && (searchGenreInput === null || searchGenreInput === void 0 ? void 0 : searchGenreInput.value.trim())) {
+            filters.genre = searchGenreInput.value.trim();
+        }
+        else if (selectedFilter === "year" && (searchYearInput === null || searchYearInput === void 0 ? void 0 : searchYearInput.value.trim())) {
+            filters.year = Number(searchYearInput.value.trim());
+        }
+        const queryParams = new URLSearchParams(filters).toString();
+        window.history.pushState(null, "", `?${queryParams}`);
+        // Simulate loading and fetch
+        setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const filteredBooks = yield fetchBooksFilter(`?${queryParams}`);
+                if (!filteredBooks || filteredBooks.length === 0) {
+                    showMessage("No books found. Resetting search in a few seconds...", false);
+                    setTimeout(() => fetchBooks().then(populateBooks), 5000);
+                }
+                else {
+                    populateBooks(filteredBooks);
+                }
+            }
+            catch (error) {
+                console.error("Fetch error:", error);
+                showMessage("Error fetching books. Please try again.", false);
+            }
+            finally {
+                loader === null || loader === void 0 ? void 0 : loader.classList.add("hidden"); // Hide loader after fetch/error
+            }
+        }), 2000);
     }
-    if (selectedFilter === "genre" && (searchGenreInput === null || searchGenreInput === void 0 ? void 0 : searchGenreInput.value.trim())) {
-        filters.genre = searchGenreInput.value.trim();
-        // isFilterApplied = true;
+    catch (error) {
+        console.error("Error applying filter:", error);
+        showMessage("Something went wrong. Please try again.", false);
+        loader === null || loader === void 0 ? void 0 : loader.classList.add("hidden"); // Hide loader on initial error
     }
-    if (selectedFilter === "year" && (searchYearInput === null || searchYearInput === void 0 ? void 0 : searchYearInput.value.trim())) {
-        filters.year = Number(searchYearInput.value.trim());
-        // isFilterApplied = true;
-    }
-    // if (!isFilterApplied) {
-    //   showMessage("Please enter a value to search.", false);
-    //   return;
-    // }
-    const queryParams = new URLSearchParams(filters).toString();
-    window.history.pushState(null, "", `?${queryParams}`);
-    const filteredBooks = yield fetchBooksFilter(`?${queryParams}`);
-    if (filteredBooks.length === 0) {
-        showMessage("No books found. Resetting search in a few seconds...", false);
-        return;
-    }
-    // **Populate only if books exist**
-    populateBooks(filteredBooks);
 });
 //# sourceMappingURL=filter.js.map

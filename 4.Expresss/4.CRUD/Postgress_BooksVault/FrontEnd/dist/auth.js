@@ -40,7 +40,7 @@ export const registerUser = () => __awaiter(void 0, void 0, void 0, function* ()
             });
             const data = yield response.json();
             if (response.ok) {
-                showMessage("Registration successful!", true);
+                showMessage("✔️ Registration successful!", true);
                 registerForm.reset();
                 // Hide register modal & show login modal
                 (_a = document.getElementById("userRegisterModal")) === null || _a === void 0 ? void 0 : _a.classList.add("hidden");
@@ -92,7 +92,7 @@ export const loginUser = () => __awaiter(void 0, void 0, void 0, function* () {
                 // ✅ Store user & token in localStorage
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user));
-                showMessage("✅ Login successful!", true);
+                showMessage("✔️ Login successful!", true);
                 loginForm.reset();
                 (_a = document.getElementById("userLoginModal")) === null || _a === void 0 ? void 0 : _a.classList.add("hidden");
                 // Redirect after login
@@ -146,10 +146,16 @@ const handleFormSubmit = (event) => __awaiter(void 0, void 0, void 0, function* 
             body: JSON.stringify(bookData),
         });
         if (!response.ok) {
-            showMessage("❌ Failed to add book", false);
+            showMessage("⚠️ Failed to add book !", false);
         }
         const result = yield response.json();
-        showMessage(result.message);
+        if (response.status === 201) {
+            showMessage(result.message, true);
+        }
+        else {
+            showMessage(result.message, false);
+        }
+        // showMessage(result.message);
         bookForm.reset();
     }
     catch (error) {

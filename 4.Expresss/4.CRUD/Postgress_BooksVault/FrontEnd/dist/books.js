@@ -16,7 +16,7 @@ export const populateBooks = (books) => {
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
           
           <!-- Genre Badge -->
-          <div class="absolute bottom-4 left-2 bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-md font-semibold shadow-sm">
+          <div class="absolute bottom-4  left-2 bg-primary/70 backdrop-blur-sm text-white px-6 py-3 rounded-md text-sm font-serif shadow-sm">
             ${book.genre}
           </div>
         </div>
