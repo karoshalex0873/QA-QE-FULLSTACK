@@ -78,7 +78,7 @@ export const loginUser = () => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         try {
-            const response = yield fetch("http://localhost:3000/api/v1/user/login", {
+            const response = yield fetch("http://localhost:3000/api/v1/users/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),

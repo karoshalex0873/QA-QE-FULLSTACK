@@ -4,7 +4,7 @@ import {BookInformationType } from "./Types";
 // fecthig book from an endpoint
 export const fetchBooks = async (): Promise<BookInformationType[]> => {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/books/get");
+    const response = await fetch("http://localhost:3000/api/V1/books/get");
     const books: BookInformationType[] = await response.json();
 
     if (!Array.isArray(books)) {
@@ -40,9 +40,8 @@ export const fetchBooksFilter = async (queryParams: string = "") => {
 };
 
 // delete books
-export const deleteBooks = async (queryParams:string="")=>{
-  
-}
+
+
 
 
 

@@ -11,7 +11,7 @@ import { showMessage } from "./modal";
 // fecthig book from an endpoint
 export const fetchBooks = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield fetch("http://localhost:3000/api/v1/books/get");
+        const response = yield fetch("http://localhost:3000/api/V1/books/get");
         const books = yield response.json();
         if (!Array.isArray(books)) {
             throw new Error("Fetched data is not an array");
@@ -44,6 +44,4 @@ export const fetchBooksFilter = (...args_1) => __awaiter(void 0, [...args_1], vo
     }
 });
 // delete books
-export const deleteBooks = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (queryParams = "") {
-});
 //# sourceMappingURL=endpoints_Fetching.js.map

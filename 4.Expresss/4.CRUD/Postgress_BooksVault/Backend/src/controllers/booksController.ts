@@ -84,27 +84,47 @@ export const getSingleBook = async (req: Request, res: Response): Promise<void> 
     }
 };
 
-// function to to delete a book from the database by the admin
-export const deleteBook = async (req: Request, res: Response): Promise<void> => {
+
+export const deleteBooks = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const { bookid } = req.params
-        const adminCheck = await pool.query("SELECT role_name FROM users WHERE user_id = $1", [req.body.user_id]);
-        if (adminCheck.rows.length === 0 || adminCheck.rows[0].role_name !== "Admin") {
-            res.status(403).json({ message: "You are not authorized to delete books" });
+        const { bookid } = req.params;
+        const { user_id } = req.body; // Extract user_id from request body
+
+        if (!bookid) {
+            res.status(400).json({ message: "Book ID is required" });
             return;
         }
+
+        if (!user_id) {
+            res.status(401).json({ message: "Unauthorized: User ID is required" });
+            return;
+        }
+
+        // Check if the user is an admin
+        const adminCheck = await pool.query("SELECT role_name FROM users WHERE user_id = $1", [user_id]);
+        if (adminCheck.rows.length === 0 || adminCheck.rows[0].role_name !== "Admin") {
+            res.status(403).json({ message: "❌ You are not authorized to delete books" });
+            return;
+        }
+
+        // Check if the book exists
         const book = await pool.query("SELECT * FROM books WHERE bookid = $1", [bookid]);
         if (book.rows.length === 0) {
-            res.status(404).json({ message: "Book not found" });
+            res.status(404).json({ message: "📚 Book not found" });
             return;
         }
+
+        // Delete the book
         await pool.query("DELETE FROM books WHERE bookid = $1", [bookid]);
-        res.status(200).json({ message: "✔ Book deleted successfully" })
+        res.status(200).json({ message: "✔ Book deleted successfully!" });
+
     } catch (error) {
-        console.error("Error deleting book:", error);
-        res.status(500).json({ message: "Internal server error" })
+        console.error("Error deleting books:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-}
+});
+
+
 
 // function to update a book by the admin and librarians
 export const updateBook = async (req: Request, res: Response): Promise<void> => {

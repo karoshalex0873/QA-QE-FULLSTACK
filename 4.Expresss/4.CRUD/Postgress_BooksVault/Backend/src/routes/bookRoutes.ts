@@ -1,5 +1,5 @@
 import express from  'express';
-import { addBook, filterBooks, getAllBooks,getSingleBook} from '../controllers/booksController';
+import { addBook, deleteBooks, filterBooks, getAllBooks,getSingleBook} from '../controllers/booksController';
 
 const router= express.Router();
 
@@ -8,5 +8,6 @@ router.post('/add',addBook)
 router.get('/get',getAllBooks)
 router.get('/get/:bookId',getSingleBook)
 router.get('/filter',filterBooks)
+router.delete("/delete/:bookid", deleteBooks);
 
 export default router;
