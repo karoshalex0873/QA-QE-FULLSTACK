@@ -1,26 +1,24 @@
 import { BookInformationType } from "./Types";
 
-
-// 3. Populate books
 export const populateBooks = (books: BookInformationType[]) => {
   try {
     const bookHTML = books
       .map(
         (book) => `
-      <div class="flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-out overflow-hidden flex-1 min-w-[300px] max-w-[320px] m-2">
+      <div class="relative flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-out overflow-hidden flex-1 min-w-[300px] max-w-[320px] m-2">
         
         <!-- Image Section -->
         <div class="relative flex-shrink-0 h-64 bg-gray-100 dark:bg-slate-700 overflow-hidden rounded-2xl">
           <img 
             src="${book.image}" 
             alt="${book.title}" 
-            class=" w-full h-auto px-3 py-2 object-cover justify-center items-center transition-transform duration-500 hover:scale-105"
+            class="w-full h-auto px-3 py-2 object-cover justify-center items-center transition-transform duration-500 hover:scale-105"
             loading="lazy"
           >
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
           
           <!-- Genre Badge -->
-          <div class="absolute bottom-4  left-2 bg-primary/70 backdrop-blur-sm text-white px-6 py-3 rounded-md text-sm font-serif shadow-sm">
+          <div class="absolute bottom-4 left-2 bg-primary/70 backdrop-blur-sm text-white px-6 py-3 rounded-md text-sm font-serif shadow-sm">
             ${book.genre}
           </div>
         </div>
@@ -77,14 +75,24 @@ export const populateBooks = (books: BookInformationType[]) => {
           </div>
         </div>
 
-        <!-- Wishlist Button -->
-        <button 
-          class="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm hover:bg-white rounded-full shadow-md transition-all hover:text-red-500"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-          </svg>
-        </button>
+        <!-- Wishlist, Update & Delete Buttons -->
+        <div class="absolute top-4 right-4 flex space-x-3">
+            <!-- Wishlist Button -->
+          <button class="p-1 w-12 h-12 bg-primary/30 backdrop-blur-lg rounded-lg cursor-pointer">
+            <i class="fas fa-heart text-xl text-white"></i>
+          </button>
+
+          <!-- Update Button -->
+          <button class="p-1 w-12 h-12 bg-primary/30 backdrop-blur-lg rounded-lg cursor-pointer">
+            <i class="fas fa-edit  text-xl text-white"></i>
+          </button>
+
+            <!-- Delete Button -->
+          <button class="p-1 w-12 h-12 bg-primary/30 backdrop-blur-lg rounded-lg cursor-pointer">
+            <i class="fas fa-trash text-xl text-white"></i>
+          </button>
+          </div>
+        
       </div>`
       )
       .join("");
@@ -100,8 +108,3 @@ export const populateBooks = (books: BookInformationType[]) => {
     console.error("Error populating books:", error);
   }
 };
-
-// 4. Event listener with improved type safety
-
-// 5. Execute the fetch and populate flow
-

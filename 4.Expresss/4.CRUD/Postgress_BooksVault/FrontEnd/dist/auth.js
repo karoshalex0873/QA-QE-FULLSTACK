@@ -33,7 +33,7 @@ export const registerUser = () => __awaiter(void 0, void 0, void 0, function* ()
         }
         // Push data into the database
         try {
-            const response = yield fetch("http://localhost:3000/api/v1/user", {
+            const response = yield fetch("http://localhost:3000/api/V1/users/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, password }),
