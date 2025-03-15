@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken'
 import userRoutes from './routes/userRoutes'
 import bookRoutes from './routes/bookRoutes'
 import { notFound } from './middlewares/erroMiddlewares';
+import adminRoutes from './routes/adminRoutes'
 
 
 // 1. Congigure the dotenv file
@@ -40,16 +41,18 @@ app.get('/', (req, res) => {
 // users 
 app.use("/api/V1/users", userRoutes)
 
-
 // Bookstore
 app.use('/api/V1/books', bookRoutes)
+
+
+app.use('/api/V1/users',adminRoutes)
 
 app.use(notFound)
 
 
 const addDefaultRoles = async () => {
   try {
-    const roles = ['Admin', 'Librarian', 'Borrower'];
+    const roles = ['Borrower', 'Librarian', 'Admin'];
 
     for (const role of roles) {
       await pool.query(
@@ -64,7 +67,7 @@ const addDefaultRoles = async () => {
   }
 };
 
-addDefaultRoles();
+
 
 
 // 6 cretate server Listen

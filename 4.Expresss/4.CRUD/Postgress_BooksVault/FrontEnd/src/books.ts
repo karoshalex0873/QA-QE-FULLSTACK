@@ -62,6 +62,10 @@ const handleDelete = async (bookId: string) => {
 // Book population function
 export const populateBooks = (books: BookInformationType[]) => {
   try {
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    const isAdmin = user?.role === 'Admin';
+    const isLibrarian = user?.role === "Librarian";
     const bookHTML = books.map((book) => `
       <div class="relative flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-out overflow-hidden flex-1 min-w-[300px] max-w-[320px] m-2" data-bookid="${book.bookid}">
         
@@ -111,6 +115,7 @@ export const populateBooks = (books: BookInformationType[]) => {
             </div>
 
           <div class="flex gap-1 absolute right-0">
+          ${isAdmin || isLibrarian ? `
             <button
               class="delete-btn flex items-center space-x-2 bg-primary/20 backdrop-blur-md hover:bg-light-100/40 text-white px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg"
               data-bookid="${book.bookid}"
@@ -123,6 +128,7 @@ export const populateBooks = (books: BookInformationType[]) => {
             >
               <i class="fas fa-edit text-md text-white"></i>
             </button>
+            ` : ''}
             <button
               class="delete-btn flex items-center space-x-2 bg-primary/20 backdrop-blur-md hover:bg-light-100/40 text-white px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg"
               data-bookid="${book.bookid}"

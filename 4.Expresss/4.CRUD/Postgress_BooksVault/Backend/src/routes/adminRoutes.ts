@@ -1,10 +1,10 @@
 import express from 'express';
-import { makeAdmin, makeLibrarian } from '../controllers/adminControllers';
+import { updateUserRole } from '../controllers/adminControllers';
 
 
 const router = express.Router();
 
-router.post('/makeAdmin',makeAdmin)
-router.post('/makeLibrarian',makeLibrarian)
+router.put('/updateRole/:userId',updateUserRole)
+
 
 export default router

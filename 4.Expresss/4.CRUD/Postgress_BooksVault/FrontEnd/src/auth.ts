@@ -76,7 +76,6 @@ export const loginUser = async () => {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    // ✅ Ensure fields are filled
     if (!email || !password) {
       showMessage("⚠️ All fields are required", false);
       return;
@@ -96,17 +95,22 @@ export const loginUser = async () => {
         return;
       }
 
-      if (data.token) {
-        // ✅ Store user & token in localStorage
+      if (data.token && data.user) {
+        // Store user data with role
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("user", JSON.stringify({
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          role: data.user.role // Store the role from backend response
+        }));
 
         showMessage("✔️ Login successful!", true);
         loginForm.reset();
         document.getElementById("userLoginModal")?.classList.add("hidden");
 
-        // Redirect after login
-        // window.location.href = "/dashboard";
+        // Refresh book listings to apply admin permissions
+        window.location.reload(); // Or better: trigger a book list reload
       }
     } catch (error) {
       console.error("Login error:", error);

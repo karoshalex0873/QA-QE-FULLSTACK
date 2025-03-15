@@ -1,10 +1,11 @@
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 // importing nessesary imports
 import { loginUser, registerUser } from "./auth";
 import { populateBooks } from "./books";
 import { fetchBooks } from "./endpoints_Fetching";
 import { applyFilter } from "./filter";
 import { setupModals } from "./modal";
+import { showUserAccounts } from "./userTables";
 setupModals();
 registerUser();
 loginUser();
@@ -30,4 +31,8 @@ setTimeout(() => {
     })
         .catch((error) => console.error("Fetch error:", error));
 }, 2000);
+(_e = document.getElementById("manageUsersBtn")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", () => {
+    // Call the function to fetch and display users
+    showUserAccounts();
+});
 //# sourceMappingURL=index.js.map

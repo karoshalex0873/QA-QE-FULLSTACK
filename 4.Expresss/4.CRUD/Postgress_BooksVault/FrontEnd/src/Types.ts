@@ -12,12 +12,13 @@ export type BookInformationType = {
 };
 
 export interface LoginResponse {
-  message: string;
+  message?: string;
   token?: string;
   user?: {
     id: number;
     name: string;
     email: string;
+    role:string
   };
 }
 
@@ -35,3 +36,11 @@ export interface BookFormData {
   pdf: string;
   user_id: string;
 };
+
+export interface UserType {
+  user_id: string;
+  name: string;
+  email: string;
+  role_name: string;
+  created_at: string;
+}

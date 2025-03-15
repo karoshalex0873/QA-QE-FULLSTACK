@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import pool from "../config/db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler"
+
 
 // User registration
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
@@ -69,7 +71,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({
       message: "✔ Login successful",
       token,
-      user: { id: user.user_id, name: user.name, email: user.email }
+      user: { id: user.user_id, name: user.name, email: user.email ,role:user.role_name}
     });
   } catch (error) {
     console.error("Error logging in the user:", error);
@@ -78,4 +80,13 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 };
 
 
-// admin making other users admin or librarians
+// get all users
+export const getAllUsers = asyncHandler(async (req:Request, res:Response) => {
+  try {
+    const users = await pool.query("SELECT * FROM users");
+    res.json(users.rows);  // return all users
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+})

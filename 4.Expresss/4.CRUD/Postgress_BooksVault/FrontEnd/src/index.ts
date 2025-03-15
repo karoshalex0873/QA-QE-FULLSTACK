@@ -4,6 +4,7 @@ import { populateBooks } from "./books";
 import { fetchBooks } from "./endpoints_Fetching";
 import { applyFilter } from "./filter";
 import { setupModals } from "./modal";
+import { loadUsers } from "./userTables";
 
 
 setupModals();
@@ -34,3 +35,7 @@ const loader = document.getElementById("loader_books") as HTMLDivElement | null;
       .catch((error) => console.error("Fetch error:", error));
   }, 2000);
   
+  document.getElementById("manageUsersBtn")?.addEventListener("click", () => {
+    // Call the function to fetch and display users
+    loadUsers
+  });

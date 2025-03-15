@@ -72,7 +72,6 @@ export const loginUser = () => __awaiter(void 0, void 0, void 0, function* () {
         }
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-        // ✅ Ensure fields are filled
         if (!email || !password) {
             showMessage("⚠️ All fields are required", false);
             return;
@@ -88,15 +87,20 @@ export const loginUser = () => __awaiter(void 0, void 0, void 0, function* () {
                 showMessage(`⚠️ ${data.message}`, false);
                 return;
             }
-            if (data.token) {
-                // ✅ Store user & token in localStorage
+            if (data.token && data.user) {
+                // Store user data with role
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("user", JSON.stringify({
+                    id: data.user.id,
+                    name: data.user.name,
+                    email: data.user.email,
+                    role: data.user.role // Store the role from backend response
+                }));
                 showMessage("✔️ Login successful!", true);
                 loginForm.reset();
                 (_a = document.getElementById("userLoginModal")) === null || _a === void 0 ? void 0 : _a.classList.add("hidden");
-                // Redirect after login
-                // window.location.href = "/dashboard";
+                // Refresh book listings to apply admin permissions
+                window.location.reload(); // Or better: trigger a book list reload
             }
         }
         catch (error) {

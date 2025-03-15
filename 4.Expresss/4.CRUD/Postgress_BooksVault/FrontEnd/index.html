@@ -184,6 +184,43 @@
         </div>
       </div>
 
+      <!-- display user by username and role -->
+      <div class="text-light-200 text-xl flex justify-center items-center gap-10">
+        <h1>
+          Welcome back,
+          <strong id="username_login">alex</strong>,
+          <strong id="role_login" class="text-sm font-extralight font-orbitron"
+            >Admin</strong
+          >
+        </h1>
+        <!-- Add an ID to the button -->
+        <button
+          id="manageUsersBtn"
+          class="bg-light-100 relative cursor-pointer px-3 py-2 rounded-md text-primary text-md"
+        >
+          <i class="fas fa-users text-lg"></i>
+          Manage Users
+        </button>
+      </div>
+      
+      <!-- Add the modal HTML (hidden by default) -->
+      <div
+        id="userAccountsModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"
+      >
+        <!-- Modal content will be dynamically populated by JavaScript -->
+      </div>
+      <!-- table of users -->
+      <div
+        id="userAccountsTable"
+        class="flex justify-center items-center my-2 absolute w-[95%] z-20 "
+      >
+        <div
+          id="userAccountsModal"
+          class="bg-light-100/80 text-primary text-lg px-3 rounded-2xl backdrop-blur-md space-x-2 py-3 mt-2"
+        ></div>
+      </div>
+
       <!-- Books Grid -->
       <div id="books" class="flex flex-wrap justify-start gap-4 p-4 sm:p-6">
         <!-- loder and content -->
@@ -222,7 +259,10 @@
 
       <!-- Modals -->
       <!-- Book  Modal Container -->
-      <div id="bookModal" class="absolute hidden top-52 right-5 overflow-hidden bg-black/40">
+      <div
+        id="bookModal"
+        class="absolute hidden top-52 right-5 overflow-hidden bg-black/40"
+      >
         <div
           class="bg-light-100/60 backdrop-blur-md rounded-lg shadow-lg w-full max-w-sm sm:max-w-lg p-6 relative text-primary"
         >
@@ -351,7 +391,7 @@
       <!-- register user modal -->
       <div
         id="userRegisterModal"
-        class="hidden absolute-pos right-10 top-24 z-50 w-md px-3 rounded-2xl  bg-light-100/80"
+        class="hidden absolute-pos right-10 top-24 z-50 w-md px-3 rounded-2xl bg-light-100/80"
       >
         <!-- form div -->
         <div class="rounded-lg py-4 px-4 max-w-md w-full">
@@ -466,6 +506,8 @@
         </div>
       </div>
 
+      <!-- modal to show table of users and their accounts details -->
+
       <!-- Message Modal -->
       <div
         id="messageModal"
@@ -474,7 +516,6 @@
         <!-- Message -->
         <p id="messageText" class="font-serif font-normal italic">hi</p>
       </div>
-
     </div>
   </body>
   <script>

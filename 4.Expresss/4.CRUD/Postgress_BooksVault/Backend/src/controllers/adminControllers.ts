@@ -1,85 +1,77 @@
 import { Request, Response } from "express";
 import pool from "../config/db";
+import jwt from "jsonwebtoken";
 
-export const makeAdmin = async (req: Request, res: Response): Promise<void> => {
+// Update a user's role. Only admins can make this request.
+
+export const updateUserRole = async (req: Request, res: Response): Promise<void> => {
+  const client = await pool.connect();
   try {
-    console.log("🔥 Full request body:", req.body);
-    const { userId } = req.body;
+    await client.query("BEGIN");
+    const { userId } = req.params;
+    const { newRole } = req.body;
 
-    if (!userId) {
-      res.status(400).json({ message: "Invalid user_id" });
-      return;
-    }
+    // Extract admin ID from JWT
+    const authHeader = req.headers.authorization;
+    if (!authHeader) throw new Error("Authorization header missing");
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string; role_name: string };
+    const adminId = decoded.userId;
 
-    // Get user's current role_name
-    const user = await pool.query(
+    // Admin validation
+    const adminCheck = await client.query(
       "SELECT role_name FROM users WHERE user_id = $1",
-      [userId]
+      [adminId]
     );
-
-    if (user.rows.length === 0) {
-      res.status(400).json({ message: "User not found" });
-      return;
+    if (adminCheck.rows[0]?.role_name !== "Admin") {
+      throw new Error("Only admins can update roles");
     }
 
-    const userRoleName = user.rows[0].role_name;
-
-    // Allow only "Librarian" or "Borrower" to become Admin
-    if (userRoleName !== "Librarian" && userRoleName !== "Borrower") {
-      res.status(400).json({
-        message: "Only Librarian or Borrower can be made Admin",
-      });
-      return;
+    // Prevent self-role change
+    if (userId === adminId) {
+      throw new Error("Cannot modify your own role");
     }
 
-    // Update role_name in users table
-    await pool.query(
-      "UPDATE users SET role_name = 'Admin' WHERE user_id = $1",
+    // User existence check
+    const userCheck = await client.query(
+      "SELECT 1 FROM users WHERE user_id = $1",
       [userId]
     );
+    if (userCheck.rows.length === 0) throw new Error("User not found");
 
-    res.status(200).json({ message: "User role updated successfully!" });
+    // Update roles in transaction
+    await client.query(
+      "UPDATE users SET role_name = $1 WHERE user_id = $2",
+      [newRole, userId]
+    );
+    await client.query(
+      "UPDATE user_roles SET role_name = $1 WHERE user_id = $2",
+      [newRole, userId]
+    );
 
+    await client.query("COMMIT");
+    res.json({ message: `Role updated to ${newRole} successfully` });
   } catch (error) {
-    console.error("❌ Error making admin:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    await client.query("ROLLBACK");
+    const message = error instanceof Error ? error.message : "Server error";
+    res.status(500).json({ message });
+  } finally {
+    client.release();
   }
 };
 
-
-// function to make a  borrwer to librarian 
-export const makeLibrarian = async (req: Request, res: Response): Promise<void> => {
+  
+export const getAppUsers = async (req: Request, res: Response): Promise<void> => {
   try {
-    console.log("💪 full body request",req.body);
-    const{userId}=req.body
-    // check if user_id is provided
-    if(!userId){
-      res.status(400).json({ message: "Invalid user_id" });
-      return;
-    }
-    // get user's current role_name
-    const user= await pool.query(
-      "SELECT role_name FROM users WHERE user_id = $1",
-      [userId]
-    );
-    // if user not found
-    if(user.rows.length===0){
-      res.status(400).json({ message: "User not found" });
-      return;
-    }
-    // check if user is already librarian
-    const userRoleName=user.rows[0].role_name;
-    if(userRoleName==="Librarian"){
-      res.status(400).json({ message: "User is already a librarian" });
-      return;
-    }
-    // update user's role_name in users table
-    await pool.query(
-      "UPDATE users SET role_name = 'Librarian' WHERE user_id = $1",
-      [userId]
-    );
+    const result = await pool.query(`
+      SELECT user_id, name, email, role_name, created_at 
+      FROM users
+      ORDER BY role_name DESC, created_at ASC
+    `);
+    
+    res.status(200).json(result.rows);
   } catch (error) {
-    console.error("error making librarian an Admin")
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Failed to fetch users" });
   }
-}
+};
