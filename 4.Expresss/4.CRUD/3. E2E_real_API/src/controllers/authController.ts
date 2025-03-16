@@ -4,8 +4,10 @@ import asyncHandler from "../middlewares/asyncHandler"
 import pool from "../config/db.config"
 import bcrypt from 'bcryptjs';
 import { generateToken } from "../../utils/helpers/generateTokens";
+import { UserRequest } from "../../utils/types/userTypes";
+
 export const registerUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: UserRequest, res: Response, next: NextFunction) => {
     const { name, email, password, role_id } = req.body
     //check if user is already registerd
     const userCheck = await pool.query("SELECT * FROM  users WHERE email = $1", [email])
@@ -37,11 +39,8 @@ export const registerUser = asyncHandler(
 
 
 export const loginUser = asyncHandler(
-  async (req: Request, res: Response) => {
+  async (req: UserRequest, res: Response) => {
     const { email, password } = req.body;
-
-    
-
     // Check if user exists
     const userCheck = await pool.query(`
       SELECT users.user_id, users.name, users.email, users.password_hash, users.role_id, user_role.role_name 
@@ -67,7 +66,7 @@ export const loginUser = asyncHandler(
     generateToken(res, user.user_id, user.role_id);
 
     res.status(200).json({
-      message: "User logged in successfully",
+      message: "✔ User logged in successfully",
       user: {
         id: user.user_id,
         name: user.name,
@@ -77,3 +76,24 @@ export const loginUser = asyncHandler(
     });
   }
 );
+
+//Logout function 
+
+export const logoutUser = asyncHandler(
+    async (req:UserRequest, res:Response,next:NextFunction) => {
+      res.cookie("access_token"," ",{
+        httpOnly:true,
+        secure:process.env.NODE_ENV !== "development",
+        sameSite:"strict",
+        expires:new Date(0) 
+      });
+
+      res.cookie("refreshToken"," ",{
+        httpOnly:true,
+        secure:process.env.NODE_ENV !== "development",
+        sameSite:"strict",
+        expires:new Date(0) 
+      });
+      res.status(200).json({ message: "User logged out successfully" });
+    }
+)

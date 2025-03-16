@@ -2,6 +2,9 @@ import express ,{ Request,Response } from "express";
 import dotenv from 'dotenv'
 import cors from 'cors';
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import cookieParser from 'cookie-parser';
+import booksRoutes from "./routes/booksRoutes";
 
 // 1. Congigure the dotenv file
 
@@ -18,6 +21,7 @@ const port = process.env.PORT;
 // 4. Enables middleswares
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(cors({
   origin: "http://localhost:5173",  // Allow requests from Vite frontend
@@ -32,6 +36,12 @@ app.get('/', (req, res) => {
 
 // auth router
 app.use('/api/v1/auth',authRoutes)
+
+// user router
+app.use('/api/v1/user',userRoutes)
+
+// books router
+app.use('/api/v1/books',booksRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running  http://localhost:${port}`)
