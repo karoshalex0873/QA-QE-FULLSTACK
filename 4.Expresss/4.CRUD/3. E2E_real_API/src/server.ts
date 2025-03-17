@@ -1,10 +1,12 @@
+import { setupAliases } from "import-aliases";
+setupAliases()
 import express ,{ Request,Response } from "express";
 import dotenv from 'dotenv'
 import cors from 'cors';
-import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes";
+import authRoutes from "@app/routes/authRoutes";
+import userRoutes from "@app/routes/userRoutes";
 import cookieParser from 'cookie-parser';
-import booksRoutes from "./routes/booksRoutes";
+import booksRoutes from "@app/routes/booksRoutes";
 
 // 1. Congigure the dotenv file
 

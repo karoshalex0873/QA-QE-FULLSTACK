@@ -1,7 +1,7 @@
 import express from 'express';
 import { protect } from '../middlewares/auth/protect';
 import { addBooks, deleteBooks, getAllBooks, updateBook } from '../controllers/booksController';
-import { adminOrLibrarianGuard, allusersGuard } from '../middlewares/auth/roleMiddleware';
+import { adminGuard, adminOrLibrarianGuard, allusersGuard, LibrarianGuard } from '../middlewares/auth/roleMiddleware';
 ;
 
 const router = express.Router();
@@ -14,5 +14,5 @@ router.get('/get',protect,allusersGuard,getAllBooks)
 // 3. update a book
 router.put('/update/:book_id',protect,adminOrLibrarianGuard,updateBook)
 // 4. delete a book
-router.delete('/delete/:book_id',protect,adminOrLibrarianGuard,deleteBooks)
+router.delete('/delete/:book_id',protect,adminGuard,deleteBooks)
 export default router;
