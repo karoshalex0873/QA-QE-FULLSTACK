@@ -13,7 +13,9 @@ const roleGuard = (allowedRoles: string[]) =>
   });
 
 // Specific guards
+const adminGuard =roleGuard(["Admin"])
 const adminOrLibrarianGuard = roleGuard(["Admin", "Librarian"]); // Both Admin and Librarian
 const borrowerGuard = roleGuard(["Borrower"]); // Borrower (read-only)
+const allusersGuard = roleGuard(["Admin","Librarian","Borrower"]); //
 
-export { roleGuard, adminOrLibrarianGuard, borrowerGuard };
+export { roleGuard, adminOrLibrarianGuard, borrowerGuard ,adminGuard,allusersGuard };

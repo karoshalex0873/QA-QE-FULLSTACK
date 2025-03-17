@@ -1,7 +1,8 @@
-import { Response } from "express";
+import {query, Request, Response } from "express";
 import asyncHandler from "../middlewares/asyncHandler";
 import pool from "../config/db.config";
 import { UserRequest } from "../../utils/types/userTypes";
+import { BookRequest } from "../../utils/types/bookTypes";
 
 export const addBooks = asyncHandler(async (req: UserRequest, res: Response) => {
   try {
@@ -30,4 +31,73 @@ export const addBooks = asyncHandler(async (req: UserRequest, res: Response) => 
     console.error("Error while adding books", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
+});
+
+
+//delete books 
+export const deleteBooks = asyncHandler(async(req:BookRequest,res:Response) => {
+  const {book_id} = req.params
+
+  if(!req.user){
+    return res.status(401).json({message: "Access denied"})
+  }
+  // check if the book exists
+  const queryBook = await pool.query("SELECT  user_id FROM books WHERE book_id =$1",[book_id])
+
+  if(queryBook.rows.length === 0){
+    return res.status(404).json({message: "Book not found"})
+  }
+  // check if the user is Admin to delete all the books
+  if(queryBook.rows[0].user_id !==req.user.user_id && req.user.role_name !=='Admin'){
+    res.status(403).json({message:"Not authorized to delete book"})
+    return
+  }
+  // delete the book
+  await pool.query("DELETE FROM books WHERE book_id = $1",[book_id])
+  res.status(200).json({message: "Book deleted successfully"})
+})
+
+export const getAllBooks = asyncHandler(async (req: Request, res: Response) => {
+  const books = await pool.query("SELECT * FROM books");
+
+  res.status(200).json({ books: books.rows });
+});
+
+export const updateBook = asyncHandler(async (req: BookRequest, res: Response) => {
+  const { book_id } = req.params;
+  const { title, author, genre, year, pages, publisher, description, image, pdf } = req.body;
+
+  if (!req.user) {
+    return res.status(401).json({ message: "Access denied" });
+  }
+
+  // Check if the book exists
+  const queryBook = await pool.query("SELECT user_id FROM books WHERE book_id = $1", [book_id]);
+
+  if (queryBook.rows.length === 0) {
+    return res.status(404).json({ message: "Book not found" });
+  }
+
+  // Check if the user is authorized to update
+  if (queryBook.rows[0].user_id !== req.user.user_id && req.user.role_name !== "Admin") {
+    return res.status(403).json({ message: "Not authorized to update this book" });
+  }
+
+  // Update book details
+  const updatedBook = await pool.query(
+    `UPDATE books SET 
+      title = COALESCE($1, title), 
+      author = COALESCE($2, author), 
+      genre = COALESCE($3, genre), 
+      year = COALESCE($4, year), 
+      pages = COALESCE($5, pages), 
+      publisher = COALESCE($6, publisher), 
+      description = COALESCE($7, description), 
+      image = COALESCE($8, image), 
+      pdf = COALESCE($9, pdf) 
+    WHERE book_id = $10 RETURNING *`,
+    [title, author, genre, year, pages, publisher, description, image, pdf, book_id]
+  );
+
+  res.status(200).json({ message: "Book updated successfully", book: updatedBook.rows });
 });
