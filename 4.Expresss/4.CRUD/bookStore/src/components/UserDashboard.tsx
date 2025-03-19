@@ -2,9 +2,29 @@
 import { useNavigate } from "react-router-dom";
 import FetchBooks from "./BooksLogic/FetchBooks";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+
+  
+  //function to get user name
+  const fetchUserName = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/user/user-name", {
+        method: "GET",
+        credentials: "include", // Needed for HTTP-only cookies
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user name");
+      }
+      const data = await response.json();
+      setName(data); // API returns username directly
+    } catch (error) {
+      console.error("Error fetching user name:", error);
+    }
+  };
   // Function to log out
   const logout = async () => {
     try {
@@ -23,6 +43,10 @@ const UserDashboard = () => {
       console.error("Logout error:", error);
     }
   };
+  useEffect(() => {
+    fetchUserName();
+  }, []);
+
 
   return (
     <div className="w-full mt-24 bg-white/10 backdrop-blur-md">
@@ -30,7 +54,7 @@ const UserDashboard = () => {
         {/* Main Content Area */}
         <div className="bg-gray-500/10 rounded-3xl shadow-xl  ">
           <header className="flex justify-between items-center py-2 px-3  ">
-            <h1 className="text-3xl text-white font-bold">Borrower-dashbord</h1>
+          <p className="text-2xl text-gray-400 font-normal font-serif">👋 <span className="text-light-100 text-3xl space-x-3 px-2 font-extrabold capitalize"> {name.split(" ")[0].trim()}</span>  welcome back </p>
             <button
               onClick={logout}
               className=" flex flex-col justify-center items-center px-6 py-2 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition-colors"

@@ -6,29 +6,29 @@ import Navigation from "../components/Navigation";
 const Dashboard = () => {
   const [role, setRole] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  
 
+  const fetchUserRole = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/user/user-role", {
+        method: "GET",
+        credentials: "include", // Needed for HTTP-only cookies
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user role");
+      }
+
+      const data = await response.json();
+      setRole(data); // Since API returns role_id directly
+    } catch (error) {
+      console.error("Error fetching user role:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   // Fetch user role from backend
   useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/v1/user/user-role", {
-          method: "GET",
-          credentials: "include", // Needed for HTTP-only cookies
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user role");
-        }
-
-        const data = await response.json();
-        setRole(data); // Since API returns role_id directly
-      } catch (error) {
-        console.error("Error fetching user role:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUserRole();
   }, []);
 

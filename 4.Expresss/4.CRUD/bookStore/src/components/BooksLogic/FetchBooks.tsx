@@ -1,6 +1,6 @@
 // FetchBooks.tsx
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash, FaStar, FaReadme } from "react-icons/fa";
+import { FaEdit, FaTrash, FaReadme } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 interface Book {
@@ -20,6 +20,28 @@ const FetchBooks = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [role, setRole] = useState<number | null>(null);
+
+
+  //function to get user role
+  const fetchUserRole = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/user/user-role", {
+        method: "GET",
+        credentials: "include", // Needed for HTTP-only cookies
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user role");
+      }
+
+      const data = await response.json();
+      setRole(data); // Since API returns role_id directly
+    } catch (error) {
+      console.error("Error fetching user role:", error);
+    }
+  };
+
 
   // ...  fetch logic ...
   const fetchBooks = async () => {
@@ -45,10 +67,11 @@ const FetchBooks = () => {
 
   useEffect(() => {
     fetchBooks();
+    fetchUserRole();
   }, []);
 
   //delet book and edit
-  
+
   return (
     <div className="p-2 dark:bg-slate-900 overflow-auto mx-auto ">
       {/* Loading State */}
@@ -103,7 +126,7 @@ const FetchBooks = () => {
             <div className="space-y-2">
               <div className="flex flex-col space-y-3">
                 <h3 className="text-base font-bold text-slate-800 dark:text-gray-300 truncate leading-tight">
-                <span className="text-gray-50 font-semibold px-3">title</span> {book.title}
+                  <span className="text-gray-50 font-semibold px-3">title</span> {book.title}
                 </h3>
                 <p className="text-md text-slate-600 dark:text-slate-400 font-medium truncate ">
                   <span className="text-gray-50 font-semibold px-3">BY</span> {book.author}
@@ -113,41 +136,49 @@ const FetchBooks = () => {
               {/* Metadata */}
               <div className="flex mx-auto flex-col  gap-x-2 gap-y-1 text-sm w-full text-slate-600 dark:text-slate-300">
                 <span className="bg-slate-100 dark:bg-slate-700/50 px-2 py-1 rounded-md">
-                <span className="text-gray-50 font-semibold px-3">Year</span> {book.year}
+                  <span className="text-gray-50 font-semibold px-3">Year</span> {book.year}
                 </span>
                 <span className="bg-slate-100 dark:bg-slate-700/50 px-2 py-1 rounded-md">
-                <span className="text-gray-50 font-semibold px-3">pages</span>  {book.pages} <span className="text-gray-50 font-semibold px-3">pages</span>
+                  <span className="text-gray-50 font-semibold px-3">pages</span>  {book.pages} <span className="text-gray-50 font-semibold px-3">pages</span>
                 </span>
                 <span className="truncate bg-slate-100 dark:bg-slate-700/50 px-2 py-1 rounded-md">
-                <span className="text-gray-50 font-semibold px-3">publisher</span> {book.publisher}
+                  <span className="text-gray-50 font-semibold px-3">publisher</span> {book.publisher}
                 </span>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-around  mt-2">
-              <button
-                  className=" flex flex-col text-sm justify-center items-center p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 dark:hover:text-green-300 transition-colors"
-                  title="Edit book"
+              <div className="flex justify-around mt-2">
+                {/* Borrow Button - Always Visible */}
+                <button
+                  className="flex flex-col text-sm justify-center items-center p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 dark:hover:text-green-300 transition-colors"
+                  title="Borrow Book"
                 >
                   <FaReadme className="w-4 h-4" />
                   Borrow
                 </button>
-                
-                <button
-                  className="p-1.5 flex flex-col  justify-center items-center hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm"
-                  title="Edit book"
-                >
-                  <FaEdit className="w-4 h-4" />
-                  edit
-                </button>
-                <button
-                  className="p-1.5 flex flex-col  items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 transition-colors text-sm"
-                  title="Delete book"
-                >
-                  <FaTrash className="w-4 h-4" />
-                  delete
-                </button>
+
+                {/* Show Edit & Delete Buttons Only If role !== 1 */}
+                {role !== 1 && (
+                  <>
+                    <button
+                      className="p-1.5 flex flex-col justify-center items-center hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm"
+                      title="Edit book"
+                    >
+                      <FaEdit className="w-4 h-4" />
+                      Edit
+                    </button>
+
+                    <button
+                      className="p-1.5 flex flex-col items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 transition-colors text-sm"
+                      title="Delete book"
+                    >
+                      <FaTrash className="w-4 h-4" />
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
+
             </div>
           </div>
         ))}
