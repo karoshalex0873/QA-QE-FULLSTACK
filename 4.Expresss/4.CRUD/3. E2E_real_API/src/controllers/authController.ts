@@ -28,7 +28,7 @@ export const registerUser = asyncHandler(
 
 
     //Generate JWT token
-    generateToken(res, newUser.rows[0].id, newUser.rows[0].role_id)
+    generateToken(res, newUser.rows[0].user_id, newUser.rows[0].role_id)
 
     res.status(201).json({ message: "User registered successfully", user: newUser.rows[0] })
 
@@ -38,44 +38,45 @@ export const registerUser = asyncHandler(
 )
 
 
-export const loginUser = asyncHandler(
-  async (req: UserRequest, res: Response) => {
-    const { email, password } = req.body;
-    // Check if user exists
-    const userCheck = await pool.query(`
-      SELECT users.user_id, users.name, users.email, users.password_hash, users.role_id, user_role.role_name 
-      FROM users 
-      JOIN user_role ON users.role_id = user_role.role_id 
-      WHERE users.email = $1
-    `, [email]);
+export const loginUser = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
-    if (userCheck.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+  // Query the user from the database
+  const userCheck = await pool.query(
+    `SELECT users.user_id, users.name, users.email, users.password_hash, users.role_id, user_role.role_name 
+     FROM users 
+     JOIN user_role ON users.role_id = user_role.role_id 
+     WHERE users.email = $1`,
+    [email]
+  );
 
-    const user = userCheck.rows[0];
-
-    // Compare hashed password
-    const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
-
-    if (!isPasswordMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Generate JWT token
-    generateToken(res, user.user_id, user.role_id);
-
-    res.status(200).json({
-      message: "✔ User logged in successfully",
-      user: {
-        id: user.user_id,
-        name: user.name,
-        email: user.email,
-        role: user.role_name
-      }
-    });
+  if (userCheck.rows.length === 0) {
+    return res.status(401).json({ message: "Invalid email or password" });
   }
-);
+
+  const user = userCheck.rows[0];
+
+  // Verify the password
+  const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
+  if (!isPasswordMatch) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  // Generate tokens and set them in cookies
+  generateToken(res, user.user_id, user.role_id);
+
+  // Send only user details (not tokens) in response
+  res.status(200).json({
+    message: "✔ User logged in successfully",
+    user: {
+      id: user.user_id,
+      name: user.name,
+      email: user.email,
+      role: user.role_name,
+    },
+  });
+});
+
 
 //Logout function 
 

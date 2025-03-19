@@ -8,32 +8,58 @@ import Navigation from "./Navigation";
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, role_id: 1 }), // Default to Borrower (change as needed)
+        credentials:"include"
+      });
+
+      const data = await response.json();
+      console.log(data.token)
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      // alert("Registration successful!");
+      navigate("/auth/login"); // Redirect user to login page
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full  flex items-center justify-center">
-      <div className=" fixed top-0 z-10 w-full  py-1">
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div className="fixed top-0 z-10 w-full py-1">
         <Navigation />
       </div>
 
-      <div className=" container flex h-screen  items-center justify-center p-6 bg-light-100/2 backdrop-blur-md">
-        {/* Image Section */}
-        <div className=" hidden lg:block min-w-md rounded-2xl overflow-hidden ">
-          <img
-            src={bgImg}
-            alt="Register"
-            className="w-full h-full object-cover"
-          />
+      <div className="container flex h-screen items-center justify-center p-6 bg-light-100/2 backdrop-blur-md">
+        <div className="hidden lg:block min-w-md rounded-2xl overflow-hidden">
+          <img src={bgImg} alt="Register" className="w-full h-full object-cover" />
         </div>
 
-        {/* Form Section */}
         <div className="w-full flex flex-col justify-center max-w-lg bg-white rounded-2xl shadow-xl p-8 mx-4 lg:mx-0 h-[500px]">
           <div className="space-y-6">
             <div className="text-center">
@@ -41,12 +67,15 @@ const Register = () => {
               <p className="text-gray-500 text-sm">Join our community today!</p>
             </div>
 
-            <form className="space-y-4">
+            {/* Show Error Message */}
+            {error && <p className="text-red-500 text-center">{error}</p>}
+
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <FormInput
                 label="Username"
                 type="text"
-                name="username"
-                value={formData.username}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your username"
               />
@@ -72,8 +101,9 @@ const Register = () => {
               <button
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-all"
+                disabled={loading}
               >
-                <FaArrowRight /> Register Now
+                {loading ? "Registering..." : <><FaArrowRight /> Register Now</>}
               </button>
             </form>
 
@@ -84,7 +114,7 @@ const Register = () => {
             </div>
 
             <p className="text-center text-gray-600">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <button
                 onClick={() => navigate("/auth/login")}
                 className="text-blue-600 font-medium hover:underline"

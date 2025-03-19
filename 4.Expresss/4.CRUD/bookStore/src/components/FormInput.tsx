@@ -1,4 +1,4 @@
-import { FormInputProps } from "../utils/types"
+import { FormInputProps } from "../utils/types";
 
 const FormInput: React.FC<FormInputProps> = ({
   label,
@@ -6,7 +6,7 @@ const FormInput: React.FC<FormInputProps> = ({
   name,
   value,
   onChange,
-  placeholder
+  placeholder,
 }) => {
   return (
     <div>
@@ -17,9 +17,11 @@ const FormInput: React.FC<FormInputProps> = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full px-4 py-2 bg-gray-700/20 rounded-md focus:outline-none focus:bg-primary/20 "/>
+        required // This makes the input required
+        className="w-full px-4 py-2 bg-gray-700/20 rounded-md focus:outline-none focus:bg-primary/20"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default FormInput
+export default FormInput;

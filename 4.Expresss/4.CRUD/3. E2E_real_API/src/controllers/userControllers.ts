@@ -10,3 +10,21 @@ export  const getUsers  = asyncHandler(
   res.status(200).json(result.rows)
   }
 )
+
+//endpoint to get user roles
+export const getUserRole = asyncHandler(
+  async(req:UserRequest,res:Response) => {
+    if(!req.user){
+      return res.status(401).json({message: "Access denied"});
+    }
+    // get user role
+    const result = await pool.query("SELECT role_id FROM users WHERE user_id = $1", [req.user.user_id] )
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(result.rows[0].role_id)
+
+  }
+)
