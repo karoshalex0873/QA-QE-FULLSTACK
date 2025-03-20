@@ -21,7 +21,7 @@ export const generateToken = (res: Response, userId: string, roleId: number) => 
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 90 * 60 * 1000, // 15 minutes
     });
 
     // Set refresh token as HTTPOnly

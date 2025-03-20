@@ -1,0 +1,149 @@
+/* General Styles */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+/* To-Do Container */
+.container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  width: 420px;
+  padding: 25px;
+  text-align: center;
+}
+
+/* Header */
+.header h1 {
+  font-size: 26px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.header h2 {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* Input Field */
+input[type="text"] {
+  width: calc(100% - 90px);
+  height: 42px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+  border-color: #ff7b00;
+}
+
+/* Add Task Button */
+button {
+  padding: 10px 15px;
+  background: #ff7b00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #e06b00;
+}
+
+/* To-Do List */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* To-Do Items */
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin: 8px 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+li:hover {
+  transform: scale(1.02);
+}
+
+/* Completed Task */
+li.completed {
+  text-decoration: line-through;
+  color: #888;
+  background: #f0f0f0;
+  transition: 0.3s ease-in-out;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Task Text */
+span {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+/* Task Date */
+span:nth-child(3) {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Delete Button */
+button.delete {
+  background: #ff4d4d;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+button.delete:hover {
+  background: #d63b3b;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  input[type="text"] {
+    width: calc(100% - 80px);
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+

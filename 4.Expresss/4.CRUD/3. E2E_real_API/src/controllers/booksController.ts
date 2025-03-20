@@ -79,29 +79,46 @@ export const deleteBooks = asyncHandler(async (req: BookRequest, res: Response) 
   }
 
   // Check if the book exists
-  const queryBook = await pool.query("SELECT user_id FROM books WHERE book_id = $1", [book_id]);
+  const bookQuery = await pool.query("SELECT user_id FROM books WHERE book_id = $1", [book_id]);
 
-  if (queryBook.rows.length === 0) {
+  if (bookQuery.rows.length === 0) {
     return res.status(404).json({ message: "Book not found" });
   }
 
-  // Check if the user is Admin to delete the book
-  if (queryBook.rows[0].user_id !== req.user.user_id && req.user.role_name !== "Admin") {
+  // Check if the user is authorized to delete
+  if (bookQuery.rows[0].user_id !== req.user.user_id && req.user.role_name !== "Admin") {
     return res.status(403).json({ message: "Not authorized to delete this book" });
   }
 
-  // First, delete all book copies related to the book
-  await pool.query("DELETE FROM book_copies WHERE book_id = $1", [book_id]);
+  try {
+    // Start transaction
+    await pool.query("BEGIN");
 
-  // Then, delete the book itself
-  await pool.query("DELETE FROM books WHERE book_id = $1", [book_id]);
+    // Check current copies count
+    const copiesQuery = await pool.query("SELECT copies FROM books WHERE book_id = $1", [book_id]);
+    const copiesCount = parseInt(copiesQuery.rows[0].copies);
 
-  res.status(200).json({ message: "Book and its copies deleted successfully" });
+    if (copiesCount > 1) {
+      // Decrement the copies count
+      await pool.query("UPDATE books SET copies = copies - 1 WHERE book_id = $1", [book_id]);
+      await pool.query("COMMIT");
+      return res.status(200).json({ message: `One copy removed. Remaining copies: ${copiesCount - 1}` });
+    } else {
+      // If only one copy exists, delete the book
+      await pool.query("DELETE FROM books WHERE book_id = $1", [book_id]);
+      await pool.query("COMMIT");
+      return res.status(200).json({ message: "All copies removed. Book deleted." });
+    }
+  } catch (error) {
+    await pool.query("ROLLBACK");
+    return res.status(500).json({ message: "Error processing request", error });
+  }
 });
 
 
+
 export const getAllBooks = asyncHandler(async (req: Request, res: Response) => {
-  const books = await pool.query("SELECT * FROM books");
+  const books = await pool.query("SELECT * FROM books  ORDER BY title ASC");
 
   res.status(200).json({ books: books.rows });
 });

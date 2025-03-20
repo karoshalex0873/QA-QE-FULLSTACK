@@ -1,11 +1,34 @@
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaPlus } from "react-icons/fa";
 import FetchBooks from "./BooksLogic/FetchBooks";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import AddBookModal from "./modals/addBookModal";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to Handle Book Submission
+  const handleAddBook = async (bookData: any) => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/books/add", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add book");
+      }
+
+      alert("Book added successfully!");
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error adding book:", error);
+    }
+  };
 
   const fetchUserName = async () => {
     try {
@@ -63,6 +86,27 @@ const AdminDashboard = () => {
             </button>
           </header>
           <FetchBooks />
+        </div>
+        {/* sidde bar menues adding books */}
+        <div>
+          {/* Add Book */}
+          <div className="p-2">
+            {/* Add Book Button */}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded shadow-md hover:bg-blue-700 transition"
+            >
+              <FaPlus /> Add Book
+            </button>
+        
+
+            {/* Add Book Modal */}
+            <AddBookModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleAddBook} />
+          </div>
+          {/* Manage users */}
+          <div>
+            {/* show users name, email and role_id  this is where all users crud opartion willbe perfoemd  by calling a compnoent called Manage users.tsx  */}
+          </div>
         </div>
       </div>
     </div>

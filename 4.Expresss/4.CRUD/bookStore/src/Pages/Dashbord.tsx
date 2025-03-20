@@ -6,7 +6,7 @@ import Navigation from "../components/Navigation";
 const Dashboard = () => {
   const [role, setRole] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
 
   const fetchUserRole = async () => {
     try {
@@ -47,7 +47,11 @@ const Dashboard = () => {
       ) : (
         <div className="flex flex-col items-center justify-center">
           {/* Render based on user role */}
-          {role === 3 ? <AdminDashboard /> : <UserDashboard />}
+          {role === 3 || role === 2 ? (
+            <AdminDashboard />
+          ) : (
+            <UserDashboard />
+          )}
         </div>
       )}
     </div>

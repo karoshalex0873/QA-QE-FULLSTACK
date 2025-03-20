@@ -7,6 +7,7 @@ import authRoutes from "@app/routes/authRoutes";
 import userRoutes from "@app/routes/userRoutes";
 import cookieParser from 'cookie-parser';
 import booksRoutes from "@app/routes/booksRoutes";
+import borroweRoutes from "./routes/borroweRoutes";
 
 // 1. Congigure the dotenv file
 
@@ -44,6 +45,9 @@ app.use('/api/v1/user',userRoutes)
 
 // books router
 app.use('/api/v1/books',booksRoutes)
+
+//borrower router
+app.use('/api/v1/borrower',borroweRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running  http://localhost:${port}`)
