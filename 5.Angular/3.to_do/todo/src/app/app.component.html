@@ -1,27 +1,43 @@
 <main class="main">
   <div class="container">
     <div class="header">
-      <!-- todo logo -->
-
-      <h1>To Do List</h1>
-      <h2>My Tasks</h2>
+      <h1>Manage Your Daily Tasks</h1>
+      <h2>Ongoing</h2>
     </div>
+
     <div class="to_doBody">
-      <input [(ngModel)]="newTask" />
-      <button (click)="addTask()">Add Task</button>
-      <ul>
+      <div class="task-input">
+        <input [(ngModel)]="newTask" placeholder="Enter a new task..." />
+        <button (click)="addTask()">+</button>
+      </div>
+
+      <ul class="task-list">
         <li
-          *ngFor="let Task of todoList; let i = index"
-          [ngClass]="{ completed: Task.completed }"
+          *ngFor="let task of todoList; let i = index"
+          [ngClass]="{ completed: task.completed }"
         >
-          <input
-            type="checkbox"
-            (change)="toggleComplete(i)"
-            [checked]="Task.completed"
-          />
-          <span>{{ Task.task }}</span>
-          <span>{{ Task.createdAt | date : "short" }}</span>
-          <button class="delete" (click)="deleteTask(Task.id)">Delete</button>
+          <div class="task-item">
+            <input
+              type="checkbox"
+              (change)="toggleComplete(i)"
+              [checked]="task.completed"
+            />
+            <input
+              *ngIf="task.isEditing"
+              [(ngModel)]="task.task"
+              (blur)="saveTask(i)"
+              (keyup.enter)="saveTask(i)"
+              class="edit-input"
+            />
+            <span *ngIf="!task.isEditing" (dblclick)="editTask(i)">{{
+              task.task
+            }}</span>
+            <span class="task-date">{{ task.createdAt | date : "short" }}</span>
+          </div>
+          <div class="task-actions">
+            <button class="edit" (click)="editTask(i)">✏️</button>
+            <button class="delete" (click)="deleteTask(task.id)">🗑️</button>
+          </div>
         </li>
       </ul>
     </div>

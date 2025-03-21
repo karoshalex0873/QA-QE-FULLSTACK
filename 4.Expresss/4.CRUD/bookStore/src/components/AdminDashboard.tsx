@@ -2,7 +2,7 @@ import { FaSignOutAlt, FaPlus } from "react-icons/fa";
 import FetchBooks from "./BooksLogic/FetchBooks";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import AddBookModal from "./modals/addBookModal";
+import AddBookModal from "./modals/AddBookModal";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
