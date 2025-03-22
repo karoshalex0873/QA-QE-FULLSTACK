@@ -1,0 +1,2 @@
+TypeORM is a Object Relation Mappert  for TypeScript and JavaScript
+It allows you to work with database using Objects and Classes instead of using raw queries.
