@@ -1,5 +1,36 @@
+<!-- there are $ types of data binding  -->
+<!-- 1. interpolation -->
+<!-- 2. property binding -->
+<!-- 3. event binding -->
+<!-- 4. two-way data binding -->
 
-<h1>{{getInfo()}}</h1>
+<!-- interpolation binding -->
+<!-- used to diplay variable or expressions inside html  -->
+<!-- example -->
+<h1>{{ title }}</h1>
+<!-- calculation using data binding -->
+<h3>2 + 4 = {{ 2 + 4 }}</h3>
 
+<!-- property binding -->
+<!-- Dynamicaly updates HTML atributs based on the componet-->
+<!-- example of a buttion -->
+<p>disabled button by use of propert binding</p>
+<button disabled="isDisabled">click me</button>
+<!-- image example -->
+<img [src]="imageUrl" alt="image" />
+<p>image by use of property binding</p>
+
+<!-- {{}} are used for text content while [] are used for HTML atributes -->
+
+<!-- event binding -->
+<!-- used to handle events in the component -->
+<button (click)="sayHello()">click me</button>
+<h4>{{ message }}</h4>
+
+<!-- two-way data binding -->
+<!-- used to bind data from the component to the template and vice versa -->
+<!-- example of two-way data binding -->
+<input type="text" [(ngModel)]="username" placeholder="Enter your name"/>
+<p>hello {{ username }}</p>
 
 <router-outlet />
