@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { AppDataSource } from './config/data-source';
 import authRoutes from './routes/authRoutes';
+import postRoutes from './routes/postRoutes';
 
 dotenv.config();
 
@@ -19,6 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // rouers from midllewares
 app.use('/api/v1/auth',authRoutes)
+
+//router for post
+app.use('/api/v1/post',postRoutes)
 
 
 AppDataSource.initialize()
