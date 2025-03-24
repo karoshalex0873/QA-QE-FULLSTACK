@@ -30,7 +30,54 @@
 <!-- two-way data binding -->
 <!-- used to bind data from the component to the template and vice versa -->
 <!-- example of two-way data binding -->
-<input type="text" [(ngModel)]="username" placeholder="Enter your name"/>
+<input type="text" [(ngModel)]="username" placeholder="Enter your name" />
 <p>hello {{ username }}</p>
+
+<!-- Lesson 2 directives -->
+<h1>🚀 Learning Angular Directives</h1>
+<p>
+  Directives in Angular allow us to manipulate the DOM dynamically. They help
+  with hiding, showing, styling, and looping over elements.
+</p>
+
+<p>Structural Directive</p>
+<!-- add or remove an element from the dom -->
+
+<!-- 1. *ngIF condation based Rendaring -->
+<button (click)="isloggedIn = !isloggedIn">Toggle Login</button>
+<p *ngIf="isloggedIn">Welcome back!</p>
+<p *ngIf="!isloggedIn">please log in</p>
+
+<!-- 2. *ngFor loop over items (a list of items dynamically) -->
+<!-- arrays -->
+<ul>
+  <li *ngFor="let car of cars">{{ car }}</li>
+</ul>
+<!-- objects -->
+<ol>
+  <li *ngFor="let info of carObject | keyvalue">
+    {{ info.key }}: {{ info.value }}
+  </li>
+</ol>
+
+<!-- 3. ngSwitch -->
+<!-- when you need to display one item of many choices -->
+<div [ngSwitch]="userRole">
+  <p *ngSwitchCase="'admin'">welcome ,Admin</p>
+  <p *ngSwitchCase="'user'">welcome ,user</p>
+  <p *ngSwitchDefault="'admin'">neither User nor Admin</p>
+</div>
+
+<p>atributes Directive</p>
+<!-- ngClass -->
+<!-- Use [ngClass] to add or remove CSS classes dynamically -->
+<p [ngClass]="{'highlight':isHighlighted}">highlight paragraph</p>
+<button (click)="isHighlighted =!isHighlighted ">highlight</button>
+
+<p [ngStyle]="{ 'color': color, 'font-weight': 'bold' }">
+  This is a colored paragraph!
+</p>
+<button (click)="color = (color === 'blue' ? 'red' : 'blue')">Change Color</button>
+
 
 <router-outlet />
