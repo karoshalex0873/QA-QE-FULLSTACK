@@ -1,2 +1,128 @@
 <app-navbar></app-navbar>
-<h1>About component</h1>
+
+<!-- Angular Form with Validation -->
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .form-container {
+    width: 70%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    text-align: center;
+    color: #010132;
+    font-size: 26px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  input.ng-touched.ng-invalid{
+    border: 1px solid red;
+    background-color: #0101321e;
+  }
+  input.ng-touched.ng-valid{
+    border: 2px solid green;
+  }
+
+  /* Disabled button */
+  .submit-btn.invalid {
+    background: #ccc;
+    color: white;
+    cursor: not-allowed;
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  /* Enabled button */
+  .submit-btn.valid {
+    background: #010132;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .submit-btn.valid:hover {
+    background: #343a40;
+  }
+</style>
+
+<body>
+  <div class="form-container">
+    <h2>Personal Details Form</h2>
+
+    <form #form="ngForm" (ngSubmit)="onsubmit(form)">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required ngModel />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required ngModel />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required ngModel />
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required ngModel>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required ngModel />
+
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" required ngModel />
+
+      <!-- Updated Submit Button -->
+      <button
+        type="submit"
+        [disabled]="!form.valid"
+        [ngClass]="form.valid ? 'valid' : 'invalid'"
+        class="submit-btn"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</body>
