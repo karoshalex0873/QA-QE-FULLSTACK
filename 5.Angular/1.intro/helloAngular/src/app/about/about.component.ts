@@ -13,4 +13,5 @@ export class AboutComponent {
   onsubmit(form:any){
     console.log(form)
   }
+  //
 }
