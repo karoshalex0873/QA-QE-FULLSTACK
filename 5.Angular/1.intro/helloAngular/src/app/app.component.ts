@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel, NgForm } from '@angular/forms';
 
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
@@ -14,4 +14,5 @@ import { NavbarComponent } from './navbar/navbar.component';
 })
 export class AppComponent {
 
+  constructor(private router:Router){}
 }

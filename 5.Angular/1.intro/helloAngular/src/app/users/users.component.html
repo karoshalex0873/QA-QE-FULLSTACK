@@ -1,0 +1,31 @@
+<p>Users works!</p>
+
+<!-- Form with ngForm (Template Reference Variable) -->
+<form #searchForm="ngForm">
+  <input 
+    type="text" 
+    name="search" 
+    [(ngModel)]="searchTerm" 
+    (input)="onSearch()" 
+    placeholder="Search users..."
+  >
+  <br>
+
+  <label for="add">Add Name</label>
+  <input 
+    type="text" 
+    id="add" 
+    name="add" 
+    [(ngModel)]="user_name"  
+    required
+  >
+  <button (click)="addUser()">add</button>
+</form>
+
+<!-- Display filtered names -->
+<ul>
+  <div *ngFor="let user of names; let id=index">
+    <p>{{user}}</p>
+    <button (click)="onDelete(id)">delete</button>
+  </div>
+</ul>
