@@ -1,1 +1,27 @@
-<p>array-forms works!</p>
+<!-- array-forms.component.html -->
+<p class="title">Array Forms Demo</p>
+
+<form [formGroup]="form" class="form-container">
+  <div formArrayName="skills">
+    <div *ngFor="let skill of skills.controls; let i = index" class="form-row">
+      <label for="skill-{{ i }}">Skill {{ i + 1 }}:</label>
+      <input id="skill-{{ i }}" [formControlName]="i" placeholder="Enter skill" class="input-field" />
+      <button type="button" class="remove-btn" (click)="removeSkill(i)">Remove</button>
+    </div>
+  </div>
+  <div class="button-group">
+    <button type="button" class="add-btn" (click)="addSkill()">Add Skill</button>
+    <button type="submit" class="submit-btn" [disabled]="form.invalid">Submit</button>
+  </div>
+</form>
+
+<!-- <pre class="output">{{ form.value | json }}</pre> -->
+<!-- output but not infrom od json -->
+<div class="output">
+  <h3>Skills List:</h3>
+  <ul>
+    <li *ngFor="let skill of form.value.skills; let i = index">
+      Skill {{ i + 1 }}: {{ skill }}
+    </li>
+  </ul>
+</div>
