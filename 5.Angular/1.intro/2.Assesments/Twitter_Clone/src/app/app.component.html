@@ -1,0 +1,81 @@
+<!-- app.component.html -->
+<div class="twitter-layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Users</h2>
+    <div class="user-list">
+      <div 
+        *ngFor="let user of users"
+        (click)="onUserSelect(user.id)"
+        [class.selected]="selectedUser?.id === user.id"
+        class="user-item"
+      >
+        <div class="user-avatar"><img [src]="imageUrl" alt="Profile Image"></div>
+        <div class="user-info">
+          <span>{{ user.username }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Profile Header -->
+    <div *ngIf="selectedUser" class="profile-header">
+      <div class="profile-info">
+
+        <!-- image url -->
+        <div class="avatar-large"><img [src]="imageUrl" alt="Profile Image" /></div>
+        <div>
+          <p>{{ selectedUser.username }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected Post -->
+    <div *ngIf="selectedPost" class="post-container">
+      <div class="post-card">
+        <h2>{{ selectedPost.title }}</h2>
+        <p>{{ selectedPost.body }}</p>
+        <div class="post-actions">
+          <button (click)="onPostSelect(selectedPost.id)">Refresh Comments</button>
+        </div>
+      </div>
+
+      <!-- Comments -->
+      <div class="comments-section">
+        <h3>Comments ({{ comments.length }})</h3>
+        <div *ngFor="let comment of comments" class="comment-card">
+          <div class="comment-header">
+            <span class="comment-author">{{ comment.name }}</span>
+            <span class="comment-email">{{ comment.email }}</span>
+          </div>
+          <p class="comment-body">{{ comment.body }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div *ngIf="posts.length" class="post-navigation">
+      <button 
+        *ngFor="let post of posts"
+        (click)="onPostSelect(post.id)"
+        [class.selected]="selectedPost?.id === post.id"
+      >
+        Post #{{ post.id }}
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      Loading...
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-state">
+      {{ errorMessage }}
+      <button (click)="loadUsers()">Retry</button>
+    </div>
+  </div>
+</div>
